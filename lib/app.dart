@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('-----------' + String.fromEnvironment('FLUTTER_APP_FLAVOR'));
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),

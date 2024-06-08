@@ -26,8 +26,6 @@ void main() async {
     '\nApp Name: ${packageInfo.appName}\n, Version: ${packageInfo.version}\n, Bundle ID: ${packageInfo.packageName}\n',
   );
 
-  print('-------' + String.fromEnvironment('flavor'));
-
   Bloc.observer = TalkerBlocObserver(
     talker: myLogger.talker,
     settings: const TalkerBlocLoggerSettings(

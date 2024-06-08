@@ -27,7 +27,7 @@ class QuizRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     return const Scaffold(
       body: Center(
-        child: Text('Quiz Ana Sayfa'),
+        child: Text('Quiz Ana Sayfa\n '),
       ),
     );
   }
