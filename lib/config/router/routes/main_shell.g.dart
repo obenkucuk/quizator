@@ -28,6 +28,11 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   parentNavigatorKey: SingleQuizRoute.$parentNavigatorKey,
                   factory: $SingleQuizRouteExtension._fromState,
                 ),
+                GoRouteData.$route(
+                  path: 'categories',
+                  name: 'Quiz Categories',
+                  factory: $QuizCategoriesRouteExtension._fromState,
+                ),
               ],
             ),
           ],
@@ -76,6 +81,24 @@ extension $SingleQuizRouteExtension on SingleQuizRoute {
         queryParams: {
           'yer': yer,
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $QuizCategoriesRouteExtension on QuizCategoriesRoute {
+  static QuizCategoriesRoute _fromState(GoRouterState state) =>
+      const QuizCategoriesRoute();
+
+  String get location => GoRouteData.$location(
+        '/quiz/categories',
       );
 
   void go(BuildContext context) => context.go(location);

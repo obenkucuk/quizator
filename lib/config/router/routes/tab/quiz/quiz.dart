@@ -11,6 +11,11 @@ const _quizShellBranchData = TypedStatefulShellBranch<QuizShellBranchData>(
           name: 'Single Quiz',
           // routes: const [],
         ),
+        TypedGoRoute<QuizCategoriesRoute>(
+          path: 'categories',
+          name: 'Quiz Categories',
+          // routes: const [],
+        ),
       ],
     ),
   ],
@@ -25,11 +30,16 @@ class QuizRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Quiz Ana Sayfa\n '),
-      ),
-    );
+    return const QuizView();
+  }
+}
+
+class QuizCategoriesRoute extends GoRouteData {
+  const QuizCategoriesRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const QuizCategoriesView();
   }
 }
 

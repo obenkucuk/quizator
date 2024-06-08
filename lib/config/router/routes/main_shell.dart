@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quizator/features/quiz/views/quiz_categories_view.dart';
+import 'package:quizator/features/quiz/views/quiz_view.dart';
 
 import '../../../features/tab_view_with_nav_bar/views/tab_view_with_nav_bar.dart';
 import '../navigator_observer.dart';
