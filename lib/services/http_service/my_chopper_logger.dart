@@ -1,88 +1,91 @@
-import 'dart:async';
+// import 'dart:async';
 
-import 'package:chopper/chopper.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:http/http.dart' as http;
-import 'package:quizator/services/log/my_logger.dart';
+// import 'package:chopper/chopper.dart';
+// import 'package:freezed_annotation/freezed_annotation.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:quizator/services/log/my_logger.dart';
 
-@immutable
-class MyHttpLoggingInterceptor implements RequestInterceptor, ResponseInterceptor {
-  /// {@macro http_logging_interceptor}
-  const MyHttpLoggingInterceptor();
 
-  @override
-  FutureOr<Request> onRequest(Request request) async {
-    final base = await request.toBaseRequest();
 
-    var startRequestMessage = '--> ${base.method} ${base.url}';
-    var bodyMessage = '';
-    if (base is http.Request) {
-      if (base.body.isNotEmpty) {
-        bodyMessage = base.body;
+// TODO: implement MyHttpLoggingInterceptor
+// @immutable
+// class MyHttpLoggingInterceptor implements RequestInterceptor, ResponseInterceptor {
+//   /// {@macro http_logging_interceptor}
+//   const MyHttpLoggingInterceptor();
 
-        startRequestMessage += ' (${base.bodyBytes.length}-byte body)';
-      }
-    }
+//   @override
+//   FutureOr<Request> onRequest(Request request) async {
+//     final base = await request.toBaseRequest();
 
-    myLogger.info(startRequestMessage);
+//     var startRequestMessage = '--> ${base.method} ${base.url}';
+//     var bodyMessage = '';
+//     if (base is http.Request) {
+//       if (base.body.isNotEmpty) {
+//         bodyMessage = base.body;
 
-    base.headers.forEach(
-      (k, v) => myLogger.info('[HEADER] $k: $v'),
-    );
+//         startRequestMessage += ' (${base.bodyBytes.length}-byte body)';
+//       }
+//     }
 
-    if (base.contentLength != null && base.headers['content-length'] == null) {
-      myLogger.info('content-length: ${base.contentLength}');
-    }
+//     myLogger.info(startRequestMessage);
 
-    if (bodyMessage.isNotEmpty) {
-      myLogger.info(bodyMessage);
-    }
+//     base.headers.forEach(
+//       (k, v) => myLogger.info('[HEADER] $k: $v'),
+//     );
 
-    myLogger.info('--> END ${base.method}');
+//     if (base.contentLength != null && base.headers['content-length'] == null) {
+//       myLogger.info('content-length: ${base.contentLength}');
+//     }
 
-    return request;
-  }
+//     if (bodyMessage.isNotEmpty) {
+//       myLogger.info(bodyMessage);
+//     }
 
-  @override
-  FutureOr<Response<dynamic>> onResponse(Response<dynamic> response) {
-    final base = response.base;
+//     myLogger.info('--> END ${base.method}');
 
-    var bytes = '';
-    var reasonPhrase = response.statusCode.toString();
-    var bodyMessage = '';
-    if (base is http.Response) {
-      if (base.reasonPhrase != null) {
-        reasonPhrase += ' ${base.reasonPhrase != reasonPhrase ? base.reasonPhrase : ''}';
-      }
+//     return request;
+//   }
 
-      if (base.body.isNotEmpty) {
-        bodyMessage = base.body;
+//   @override
+//   FutureOr<Response<dynamic>> onResponse(Response<dynamic> response) {
+//     final base = response.base;
 
-        bytes = ' (${response.bodyBytes.length}-byte body)';
-      }
-    }
+//     var bytes = '';
+//     var reasonPhrase = response.statusCode.toString();
+//     var bodyMessage = '';
+//     if (base is http.Response) {
+//       if (base.reasonPhrase != null) {
+//         reasonPhrase += ' ${base.reasonPhrase != reasonPhrase ? base.reasonPhrase : ''}';
+//       }
 
-    // Always start on a new line
-    myLogger.info(
-      '<-- $reasonPhrase ${base.request?.method} ${base.request?.url}$bytes',
-    );
+//       if (base.body.isNotEmpty) {
+//         bodyMessage = base.body;
 
-    base.headers.forEach(
-      (k, v) => myLogger.info(
-        '$k: $v',
-      ),
-    );
+//         bytes = ' (${response.bodyBytes.length}-byte body)';
+//       }
+//     }
 
-    if (base.contentLength != null && base.headers['content-length'] == null) {
-      myLogger.info('content-length: ${base.contentLength}');
-    }
+//     // Always start on a new line
+//     myLogger.info(
+//       '<-- $reasonPhrase ${base.request?.method} ${base.request?.url}$bytes',
+//     );
 
-    if (bodyMessage.isNotEmpty) {
-      myLogger.info(bodyMessage);
-    }
+//     base.headers.forEach(
+//       (k, v) => myLogger.info(
+//         '$k: $v',
+//       ),
+//     );
 
-    myLogger.info('<-- END HTTP');
+//     if (base.contentLength != null && base.headers['content-length'] == null) {
+//       myLogger.info('content-length: ${base.contentLength}');
+//     }
 
-    return response;
-  }
-}
+//     if (bodyMessage.isNotEmpty) {
+//       myLogger.info(bodyMessage);
+//     }
+
+//     myLogger.info('<-- END HTTP');
+
+//     return response;
+//   }
+// }

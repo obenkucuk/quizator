@@ -4,17 +4,20 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:quizator/injection_container.dart';
+import 'package:quizator/services/http_service/my_chopper_service.dart';
+import 'package:quizator/services/log/my_logger.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_settings.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 import 'app.dart';
 import 'config/flavor/flavor_model.dart';
 import 'config/flavor/flavors.dart';
-import 'services/log/my_logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // initContainer();
+  await MyChopperService.instance.init();
+  initContainer();
 
   if (!kDebugMode) usePathUrlStrategy();
 
@@ -22,12 +25,12 @@ void main() async {
 
   // final firebase = await Firebase.initializeApp();
 
-  myLogger.log(
+  getIt<MyTalkerLogger>().log(
     '\nApp Name: ${packageInfo.appName}\n, Version: ${packageInfo.version}\n, Bundle ID: ${packageInfo.packageName}\n',
   );
 
   Bloc.observer = TalkerBlocObserver(
-    talker: myLogger.talker,
+    talker: getIt<Talker>(),
     settings: const TalkerBlocLoggerSettings(
       // printChanges: false,
       printClosings: true,

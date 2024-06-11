@@ -1,8 +1,8 @@
 part of '../../main_shell.dart';
 
-const _quizShellBranchData = TypedStatefulShellBranch<QuizShellBranchData>(
+const _homeShellBranchData = TypedStatefulShellBranch<HomeShellBranchData>(
   routes: <TypedRoute<RouteData>>[
-    TypedGoRoute<QuizRoute>(
+    TypedGoRoute<HomeRoute>(
       path: '/quiz',
       name: 'Quiz',
       routes: [
@@ -21,16 +21,16 @@ const _quizShellBranchData = TypedStatefulShellBranch<QuizShellBranchData>(
   ],
 );
 
-class QuizShellBranchData extends StatefulShellBranchData {
-  const QuizShellBranchData();
+class HomeShellBranchData extends StatefulShellBranchData {
+  const HomeShellBranchData();
 }
 
-class QuizRoute extends GoRouteData {
-  const QuizRoute();
+class HomeRoute extends GoRouteData {
+  const HomeRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const QuizView();
+    return const HomeView();
   }
 }
 
@@ -44,18 +44,14 @@ class QuizCategoriesRoute extends GoRouteData {
 }
 
 class SingleQuizRoute extends GoRouteData {
-  const SingleQuizRoute({required this.yer});
+  const SingleQuizRoute({required this.category});
 
-  final String yer;
+  final int category;
 
   static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Quiz Sayfası'),
-      ),
-    );
+    return QuizView(category: category);
   }
 }

@@ -20,7 +20,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
             GoRouteData.$route(
               path: '/quiz',
               name: 'Quiz',
-              factory: $QuizRouteExtension._fromState,
+              factory: $HomeRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
                   path: 'single-quiz',
@@ -54,8 +54,8 @@ extension $MainShellRouteDataExtension on MainShellRouteData {
       const MainShellRouteData();
 }
 
-extension $QuizRouteExtension on QuizRoute {
-  static QuizRoute _fromState(GoRouterState state) => const QuizRoute();
+extension $HomeRouteExtension on HomeRoute {
+  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
 
   String get location => GoRouteData.$location(
         '/quiz',
@@ -73,13 +73,13 @@ extension $QuizRouteExtension on QuizRoute {
 
 extension $SingleQuizRouteExtension on SingleQuizRoute {
   static SingleQuizRoute _fromState(GoRouterState state) => SingleQuizRoute(
-        yer: state.uri.queryParameters['yer']!,
+        category: int.parse(state.uri.queryParameters['category']!),
       );
 
   String get location => GoRouteData.$location(
         '/quiz/single-quiz',
         queryParams: {
-          'yer': yer,
+          'category': category.toString(),
         },
       );
 

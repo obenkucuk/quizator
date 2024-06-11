@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('-----------' + String.fromEnvironment('FLUTTER_APP_FLAVOR'));
+    print('-----------${const String.fromEnvironment('FLUTTER_APP_FLAVOR')}');
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),
@@ -46,22 +46,6 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
-
-    //  MaterialApp.router(
-    //           routerConfig: router,
-    //           title: 'Rehab ACL',
-    //           theme: lightTheme,
-    //           themeMode: state.themeMode,
-    //           darkTheme: ThemeData.dark().copyWith(extensions: [MyColors.dark]),
-    //           themeAnimationCurve: Curves.easeInOutCubicEmphasized,
-    //           themeAnimationDuration: const Duration(milliseconds: 500),
-    //           builder: (context, child) {
-    //             return ScrollConfiguration(
-    //               behavior: CustomScrollBehaviour(),
-    //               child: child ?? const SizedBox.shrink(),
-    //             );
-    //           },
-    //         ),
   }
 
   CustomPainter bannerPainter(FlavorModel flavorModel) => BannerPainter(

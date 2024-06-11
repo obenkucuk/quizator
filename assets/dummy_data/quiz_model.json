@@ -1,0 +1,125 @@
+{
+    "response_code": 0,
+    "results": [
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "History",
+            "question": "When was Adolf Hitler appointed as Chancellor of Germany?",
+            "correct_answer": "January 30, 1933",
+            "incorrect_answers": [
+                "September 1, 1939",
+                "February 27, 1933",
+                "October 6, 1939"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Film",
+            "question": "What is the name of James Dean&#039;s character in the 1955 movie &quot;Rebel Without a Cause&quot;?",
+            "correct_answer": "Jim Stark",
+            "incorrect_answers": [
+                "Ned Stark",
+                "Jim Kane",
+                "Frank Stark"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Film",
+            "question": "Which 90&#039;s comedy cult classic features cameos appearances from Meat Loaf, Alice Cooper and Chris Farley?",
+            "correct_answer": "Wayne&#039;s World",
+            "incorrect_answers": [
+                "Bill &amp; Ted&#039;s Excellent Adventure",
+                "Dumb and Dumber",
+                "Austin Powers: International Man of Mystery"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "Which of these is NOT a game under the Worms series?",
+            "correct_answer": "Major Malfunction",
+            "incorrect_answers": [
+                "Crazy Golf",
+                "Clan Wars",
+                "Ultimate Mayhem"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Music",
+            "question": "Which of the following music bands is not from Finland?",
+            "correct_answer": "Sabaton",
+            "incorrect_answers": [
+                "Apocalyptica",
+                "Waltari",
+                "Lordi"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Entertainment: Video Games",
+            "question": "In &quot;Resident Evil 2&quot;, which virus was William Birkin mutated by?",
+            "correct_answer": "G-Virus",
+            "incorrect_answers": [
+                "T-Virus",
+                "C-Virus",
+                "E-Virus"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "medium",
+            "category": "Geography",
+            "question": "What is the region conjoining Pakistan, India, and China with unknown leadership called?",
+            "correct_answer": "Kashmir",
+            "incorrect_answers": [
+                "Andorra",
+                "Gibraltar",
+                "Quin"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Science: Mathematics",
+            "question": "How many zeptometres are inside one femtometre?",
+            "correct_answer": "1,000,000",
+            "incorrect_answers": [
+                "10",
+                "1,000,000,000",
+                "1000"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "hard",
+            "category": "Entertainment: Video Games",
+            "question": "Which one of these characters appeared in Marvel vs Capcom: Infinite? ",
+            "correct_answer": "Firebrand",
+            "incorrect_answers": [
+                "Wolverine",
+                "Dr. Doom",
+                "Jill Valentine"
+            ]
+        },
+        {
+            "type": "multiple",
+            "difficulty": "easy",
+            "category": "Entertainment: Japanese Anime &amp; Manga",
+            "question": "In the 2012 animated film &quot;Wolf Children&quot;, what are the names of the wolf children?",
+            "correct_answer": "Ame &amp; Yuki",
+            "incorrect_answers": [
+                "Hana &amp; Yuki",
+                "Ame &amp; Hana",
+                "Chuck &amp; Anna"
+            ]
+        }
+    ]
+}

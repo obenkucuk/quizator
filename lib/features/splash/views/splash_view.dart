@@ -9,7 +9,7 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => const QuizRoute().go(context),
+      (_) => const HomeRoute().go(context),
     );
 
     return const Scaffold(

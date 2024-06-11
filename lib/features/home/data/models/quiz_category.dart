@@ -102,4 +102,31 @@ enum QuizCategory {
         entertainmentCartoonAnimations =>
           'https://images.unsplash.com/photo-1582128003011-717e3203f590?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
       };
+
+  int get number => switch (this) {
+        generalKnowledge => 9,
+        entertainmentBooks => 10,
+        entertainmentFilm => 11,
+        entertainmentMusic => 12,
+        entertainmentMusicalsAndTheatres => 13,
+        entertainmentTelevision => 14,
+        entertainmentVideoGames => 15,
+        entertainmentBoardGames => 16,
+        scienceNature => 17,
+        scienceComputers => 18,
+        scienceMathematics => 19,
+        mythology => 20,
+        sports => 21,
+        geography => 22,
+        history => 23,
+        politics => 24,
+        art => 25,
+        celebrities => 26,
+        animals => 27,
+        vehicles => 28,
+        entertainmentComics => 29,
+        scienceGadgets => 30,
+        entertainmentJapaneseAnimeManga => 31,
+        entertainmentCartoonAnimations => 32,
+      };
 }

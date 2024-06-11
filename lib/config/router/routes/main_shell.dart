@@ -1,20 +1,22 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quizator/features/quiz/views/quiz_categories_view.dart';
-import 'package:quizator/features/quiz/views/quiz_view.dart';
+import 'package:quizator/features/home/presentation/views/quiz_categories_view.dart';
+import 'package:quizator/features/home/presentation/views/home_view.dart';
+import 'package:quizator/injection_container.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
+import '../../../features/quiz/presentation/views/quiz_view.dart';
 import '../../../features/tab_view_with_nav_bar/views/tab_view_with_nav_bar.dart';
-import '../navigator_observer.dart';
+
 import '../router.dart';
 
 part 'main_shell.g.dart';
-part 'tab/quiz/quiz.dart';
+part 'tab/home/home.dart';
 part 'tab/settings/settings.dart';
 
 @TypedStatefulShellRoute<MainShellRouteData>(
   branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
-    _quizShellBranchData,
+    _homeShellBranchData,
     _settingsShellBranchData,
   ],
 )
@@ -36,7 +38,7 @@ class MainShellRouteData extends StatefulShellRouteData {
   static const String $restorationScopeId = 'restorationScopeId';
 
   static final List<NavigatorObserver> $observers = <NavigatorObserver>[
-    MyNavigatorObserver(),
+    getIt<TalkerRouteObserver>(),
   ];
 
   static Widget $navigatorContainerBuilder(

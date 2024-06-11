@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../components/expanded_text.dart';
-import '../../../config/theme/my_colors.dart';
-import '../../../config/theme/text_styles.dart';
+import '../../../../components/expanded_text.dart';
+import '../../../../config/theme/my_colors.dart';
+import '../../../../config/theme/text_styles.dart';
 
 class HomeViewTitle extends StatelessWidget {
   const HomeViewTitle({

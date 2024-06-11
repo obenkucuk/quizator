@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizator/config/router/routes/main_shell.dart';
-import 'package:quizator/features/quiz/models/quiz_category.dart';
-import '../../../components/my_scrollbar.dart';
-import '../../../components/sliver_sized_box.dart';
-import '../../../config/theme/my_colors.dart';
-import '../../../config/theme/text_styles.dart';
+import 'package:quizator/features/home/data/models/quiz_category.dart';
+import '../../../../components/my_scrollbar.dart';
+import '../../../../components/sliver_sized_box.dart';
+import '../../../../config/theme/my_colors.dart';
+import '../../../../config/theme/text_styles.dart';
 import '../widgets/category_list_item.dart';
 import '../widgets/home_view_title.dart';
 
-class QuizView extends StatelessWidget {
-  const QuizView({super.key});
+class HomeView extends StatelessWidget {
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +95,7 @@ class QuizView extends StatelessWidget {
                   return CategoryListItem(
                     imageUrl: category.imageUrl,
                     name: category.name,
+                    category: category.number,
                   );
                 },
                 separatorBuilder: (context, index) => const SizedBox(width: 10),

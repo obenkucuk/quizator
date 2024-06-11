@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:quizator/config/router/routes/main_shell.dart';
+import 'package:quizator/config/theme/my_colors.dart';
+import 'package:quizator/config/theme/text_styles.dart';
 
-import '../../../components/my_network_image.dart';
+import '../../../../components/my_network_image.dart';
 
 class CategoryListItem extends StatelessWidget {
   const CategoryListItem({
     super.key,
     required this.imageUrl,
     required this.name,
+    required this.category,
   });
 
   final String imageUrl;
   final String name;
+  final int category;
 
   @override
   Widget build(BuildContext context) {
     print('LocationListItem BUILT');
 
-    return Hero(
-      tag: imageUrl,
-      child: GestureDetector(
-        onTap: () {
-          // SingleExercisesRoute(yer: imageUrl).go(context);
-        },
-        child: AspectRatio(
-          aspectRatio: 9 / 16,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Stack(
-              children: [
-                _buildParallaxBackground(context),
-                _buildGradient(),
-                _buildTitleAndSubtitle(),
-              ],
-            ),
+    return GestureDetector(
+      onTap: () {
+        SingleQuizRoute(category: category).go(context);
+      },
+      child: AspectRatio(
+        aspectRatio: 9 / 16,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Stack(
+            children: [
+              _buildParallaxBackground(context),
+              _buildGradient(),
+              _buildTitle(context),
+            ],
           ),
         ),
       ),
@@ -66,7 +68,7 @@ class CategoryListItem extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+            colors: [Colors.transparent, Colors.black.withOpacity(1)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: const [0.6, 0.95],
@@ -76,31 +78,16 @@ class CategoryListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleAndSubtitle() {
-    return Positioned(
-      left: 20,
+  Widget _buildTitle(BuildContext context) {
+    return Positioned.fill(
+      left: 10,
       bottom: 20,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
+      child: Align(
+          alignment: Alignment.bottomLeft,
+          child: Text(
             name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          // Text(
-          //   country,
-          //   style: const TextStyle(
-          //     color: Colors.white,
-          //     fontSize: 14,
-          //   ),
-          // ),
-        ],
-      ),
+            style: s20W600.copyWith(color: context.myColors.scaffoldBackgroundColor),
+          )),
     );
   }
 }

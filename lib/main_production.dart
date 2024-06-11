@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:package_info_plus/package_info_plus.dart';
+// ignore: depend_on_referenced_packages
+// import 'package:package_info_plus/package_info_plus.dart';
+import 'package:quizator/injection_container.dart';
+import 'package:quizator/services/http_service/my_chopper_service.dart';
+import 'package:quizator/services/log/my_logger.dart';
 import 'app.dart';
 import 'config/flavor/flavor_model.dart';
 import 'config/flavor/flavors.dart';
-import 'services/log/my_logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // final packageInfo = await PackageInfo.fromPlatform();
+
+  await MyChopperService.instance.init();
+  initContainer();
   final packageInfo = await PackageInfo.fromPlatform();
 
-  myLogger.log(
-    '\nApp Name: ${packageInfo.appName}\n, Version: ${packageInfo.version}\n, Bundle ID: ${packageInfo.packageName}\n,',
+  // final firebase = await Firebase.initializeApp();
+
+  getIt<MyTalkerLogger>().log(
+    '\nApp Name: ${packageInfo.appName}\n, Version: ${packageInfo.version}\n, Bundle ID: ${packageInfo.packageName}\n',
   );
 
   const flavorModel = FlavorModel(
