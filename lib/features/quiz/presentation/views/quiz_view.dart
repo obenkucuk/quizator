@@ -89,7 +89,7 @@ final class QuizView extends HookWidget {
                           padEnds: false,
                           delegate: SliverChildListDelegate.fixed(
                             [
-                              PageView(
+                              PageView.builder(
                                 onPageChanged: (page) {
                                   context.read<QuizBloc>().add(
                                         UpdateCurrentQuestionEvent(
@@ -97,52 +97,49 @@ final class QuizView extends HookWidget {
                                         ),
                                       );
                                 },
+                                itemCount: state.questions.length,
                                 controller: pageController,
                                 physics: userStartedQuiz
                                     ? const BouncingScrollPhysics()
                                     : const NeverScrollableScrollPhysics(),
-                                children: List.generate(
-                                  state.questions.length,
-                                  (index) {
-                                    final quizStateModel = quizStateModels[index];
+                                itemBuilder: (context, index) {
+                                  final quizStateModel = quizStateModels[index];
 
-                                    return Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        //* Question
-                                        QuestionItem(
-                                          quizStateModel: quizStateModel,
-                                          pageController: pageController,
-                                        ).animate(target: userStartedQuiz ? 0 : 1).blur(),
+                                  return Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      //* Question
+                                      QuestionItem(
+                                        quizStateModel: quizStateModel,
+                                        pageController: pageController,
+                                      ).animate(target: userStartedQuiz ? 0 : 1).blur(),
 
-                                        //* Start Button
-                                        Offstage(
-                                          offstage: userStartedQuiz,
-                                          child: Center(
-                                            child: SizedBox(
-                                              height: 36,
-                                              width: MediaQuery.sizeOf(context).width * 0.5,
-                                              child: CupertinoButton.filled(
-                                                  padding: EdgeInsets.zero,
-                                                  child: Text(
-                                                    'Start Quiz',
-                                                    style: s14W600.copyWith(
-                                                      color:
-                                                          context.myColors.scaffoldBackgroundColor,
-                                                    ),
+                                      //* Start Button
+                                      Offstage(
+                                        offstage: userStartedQuiz,
+                                        child: Center(
+                                          child: SizedBox(
+                                            height: 36,
+                                            width: MediaQuery.sizeOf(context).width * 0.5,
+                                            child: CupertinoButton.filled(
+                                                padding: EdgeInsets.zero,
+                                                child: Text(
+                                                  'Start Quiz',
+                                                  style: s14W600.copyWith(
+                                                    color: context.myColors.scaffoldBackgroundColor,
                                                   ),
-                                                  onPressed: () {
-                                                    context
-                                                        .read<QuizBloc>()
-                                                        .add(const StartQuizEvent());
-                                                  }),
-                                            ),
+                                                ),
+                                                onPressed: () {
+                                                  context
+                                                      .read<QuizBloc>()
+                                                      .add(const StartQuizEvent());
+                                                }),
                                           ),
-                                        )
-                                      ],
-                                    );
-                                  },
-                                ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
                               ),
                             ],
                           ),
