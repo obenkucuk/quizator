@@ -53,15 +53,15 @@ Quizator uses flavors for different environments. (Development, Production)
 
 #### Home View Demo
 
-<img src="screenshots/home.mp4" width=200>
+<img src="screenshots/home.gif" width=200>
 
 #### Quiz View Demo
 
-<img src="screenshots/quiz.mp4" width=200>
+<img src="screenshots/quiz.gif" width=200>
 
 #### Submit View
 
-<img src="screenshots/submit.mp4" width=200>
+<img src="screenshots/submit.gif" width=200>
 
 ## Features
 
