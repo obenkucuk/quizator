@@ -15,7 +15,9 @@ class QuizEvent with _$QuizEvent {
   }) = AnswerQuestionEvent;
 
   const factory QuizEvent.updateCurrentQuestion({
-    required int updateIndexWith,
+    required bool withAnimation,
+    required ScrollDirection pageDirection,
+    int? pageIndex,
   }) = UpdateCurrentQuestionEvent;
 
   const factory QuizEvent.updateDuration() = UpdateDurationEvent;

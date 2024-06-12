@@ -1,11 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:quizator/config/theme/my_colors.dart';
+part of '../views/quiz_loaded_view.dart';
 
-import '../bloc/quiz_bloc.dart';
-
-class DotIndicator extends StatelessWidget {
-  const DotIndicator({
-    super.key,
+class _DotIndicator extends StatelessWidget {
+  const _DotIndicator({
     required this.quizStateModels,
     required this.currentQuestion,
   });
@@ -15,39 +11,42 @@ class DotIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const size = 12.0;
+    return SliverSizedBox(
+      height: 16,
+      child: ColoredBox(
+        color: Colors.amber,
+        child: Center(
+          child: ListView.separated(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            itemCount: quizStateModels.length,
+            scrollDirection: Axis.horizontal,
+            cacheExtent: 100,
+            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            itemBuilder: (_, int index) {
+              final state = quizStateModels.map((e) => e.status).toList();
 
-    return Center(
-      child: ListView.separated(
-        shrinkWrap: true,
-        padding: EdgeInsets.zero,
-        itemCount: quizStateModels.length,
-        scrollDirection: Axis.horizontal,
-        cacheExtent: 100,
-        separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 8),
-        itemBuilder: (
-          BuildContext context,
-          int index,
-        ) {
-          final state =
-              List.generate(quizStateModels.length, (index) => quizStateModels[index].status);
-
-          return SizedBox(
-            width: size,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: state[index].color,
-                borderRadius: BorderRadius.circular(size),
-                border: index == currentQuestion
-                    ? Border.all(
-                        width: 1,
-                        color: context.myColors.primaryColor,
-                      )
-                    : null,
-              ),
-            ),
-          );
-        },
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: index == currentQuestion ? 0 : 2),
+                child: SizedBox(
+                  width: index == currentQuestion ? 16 : 12,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: state[index].color,
+                      borderRadius: BorderRadius.circular(500),
+                      border: index == currentQuestion
+                          ? Border.all(
+                              width: 1,
+                              color: context.myColors.primaryColor,
+                            )
+                          : null,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

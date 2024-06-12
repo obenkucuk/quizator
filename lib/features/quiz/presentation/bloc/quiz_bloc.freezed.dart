@@ -23,7 +23,9 @@ mixin _$QuizEvent {
     required TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)
         answerQuestion,
-    required TResult Function(int updateIndexWith) updateCurrentQuestion,
+    required TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)
+        updateCurrentQuestion,
     required TResult Function() updateDuration,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,7 +36,9 @@ mixin _$QuizEvent {
     TResult? Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult? Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult? Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult? Function()? updateDuration,
   }) =>
       throw _privateConstructorUsedError;
@@ -45,7 +49,9 @@ mixin _$QuizEvent {
     TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult Function()? updateDuration,
     required TResult orElse(),
   }) =>
@@ -180,7 +186,9 @@ class _$GetSelectedQuizEventImpl
     required TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)
         answerQuestion,
-    required TResult Function(int updateIndexWith) updateCurrentQuestion,
+    required TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)
+        updateCurrentQuestion,
     required TResult Function() updateDuration,
   }) {
     return getSelectedQuiz(category);
@@ -194,7 +202,9 @@ class _$GetSelectedQuizEventImpl
     TResult? Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult? Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult? Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult? Function()? updateDuration,
   }) {
     return getSelectedQuiz?.call(category);
@@ -208,7 +218,9 @@ class _$GetSelectedQuizEventImpl
     TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult Function()? updateDuration,
     required TResult orElse(),
   }) {
@@ -321,7 +333,9 @@ class _$StartQuizEventImpl
     required TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)
         answerQuestion,
-    required TResult Function(int updateIndexWith) updateCurrentQuestion,
+    required TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)
+        updateCurrentQuestion,
     required TResult Function() updateDuration,
   }) {
     return startQuiz();
@@ -335,7 +349,9 @@ class _$StartQuizEventImpl
     TResult? Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult? Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult? Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult? Function()? updateDuration,
   }) {
     return startQuiz?.call();
@@ -349,7 +365,9 @@ class _$StartQuizEventImpl
     TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult Function()? updateDuration,
     required TResult orElse(),
   }) {
@@ -509,7 +527,9 @@ class _$AnswerQuestionEventImpl
     required TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)
         answerQuestion,
-    required TResult Function(int updateIndexWith) updateCurrentQuestion,
+    required TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)
+        updateCurrentQuestion,
     required TResult Function() updateDuration,
   }) {
     return answerQuestion(selectedAnswer, quizStateModel, index);
@@ -523,7 +543,9 @@ class _$AnswerQuestionEventImpl
     TResult? Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult? Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult? Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult? Function()? updateDuration,
   }) {
     return answerQuestion?.call(selectedAnswer, quizStateModel, index);
@@ -537,7 +559,9 @@ class _$AnswerQuestionEventImpl
     TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult Function()? updateDuration,
     required TResult orElse(),
   }) {
@@ -610,7 +634,8 @@ abstract class _$$UpdateCurrentQuestionEventImplCopyWith<$Res> {
           $Res Function(_$UpdateCurrentQuestionEventImpl) then) =
       __$$UpdateCurrentQuestionEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int updateIndexWith});
+  $Res call(
+      {bool withAnimation, ScrollDirection pageDirection, int? pageIndex});
 }
 
 /// @nodoc
@@ -625,13 +650,23 @@ class __$$UpdateCurrentQuestionEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? updateIndexWith = null,
+    Object? withAnimation = null,
+    Object? pageDirection = null,
+    Object? pageIndex = freezed,
   }) {
     return _then(_$UpdateCurrentQuestionEventImpl(
-      updateIndexWith: null == updateIndexWith
-          ? _value.updateIndexWith
-          : updateIndexWith // ignore: cast_nullable_to_non_nullable
-              as int,
+      withAnimation: null == withAnimation
+          ? _value.withAnimation
+          : withAnimation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pageDirection: null == pageDirection
+          ? _value.pageDirection
+          : pageDirection // ignore: cast_nullable_to_non_nullable
+              as ScrollDirection,
+      pageIndex: freezed == pageIndex
+          ? _value.pageIndex
+          : pageIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -641,14 +676,21 @@ class __$$UpdateCurrentQuestionEventImplCopyWithImpl<$Res>
 class _$UpdateCurrentQuestionEventImpl
     with DiagnosticableTreeMixin
     implements UpdateCurrentQuestionEvent {
-  const _$UpdateCurrentQuestionEventImpl({required this.updateIndexWith});
+  const _$UpdateCurrentQuestionEventImpl(
+      {required this.withAnimation,
+      required this.pageDirection,
+      this.pageIndex});
 
   @override
-  final int updateIndexWith;
+  final bool withAnimation;
+  @override
+  final ScrollDirection pageDirection;
+  @override
+  final int? pageIndex;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizEvent.updateCurrentQuestion(updateIndexWith: $updateIndexWith)';
+    return 'QuizEvent.updateCurrentQuestion(withAnimation: $withAnimation, pageDirection: $pageDirection, pageIndex: $pageIndex)';
   }
 
   @override
@@ -656,7 +698,9 @@ class _$UpdateCurrentQuestionEventImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'QuizEvent.updateCurrentQuestion'))
-      ..add(DiagnosticsProperty('updateIndexWith', updateIndexWith));
+      ..add(DiagnosticsProperty('withAnimation', withAnimation))
+      ..add(DiagnosticsProperty('pageDirection', pageDirection))
+      ..add(DiagnosticsProperty('pageIndex', pageIndex));
   }
 
   @override
@@ -664,12 +708,17 @@ class _$UpdateCurrentQuestionEventImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateCurrentQuestionEventImpl &&
-            (identical(other.updateIndexWith, updateIndexWith) ||
-                other.updateIndexWith == updateIndexWith));
+            (identical(other.withAnimation, withAnimation) ||
+                other.withAnimation == withAnimation) &&
+            (identical(other.pageDirection, pageDirection) ||
+                other.pageDirection == pageDirection) &&
+            (identical(other.pageIndex, pageIndex) ||
+                other.pageIndex == pageIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, updateIndexWith);
+  int get hashCode =>
+      Object.hash(runtimeType, withAnimation, pageDirection, pageIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -686,10 +735,12 @@ class _$UpdateCurrentQuestionEventImpl
     required TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)
         answerQuestion,
-    required TResult Function(int updateIndexWith) updateCurrentQuestion,
+    required TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)
+        updateCurrentQuestion,
     required TResult Function() updateDuration,
   }) {
-    return updateCurrentQuestion(updateIndexWith);
+    return updateCurrentQuestion(withAnimation, pageDirection, pageIndex);
   }
 
   @override
@@ -700,10 +751,12 @@ class _$UpdateCurrentQuestionEventImpl
     TResult? Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult? Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult? Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult? Function()? updateDuration,
   }) {
-    return updateCurrentQuestion?.call(updateIndexWith);
+    return updateCurrentQuestion?.call(withAnimation, pageDirection, pageIndex);
   }
 
   @override
@@ -714,12 +767,14 @@ class _$UpdateCurrentQuestionEventImpl
     TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult Function()? updateDuration,
     required TResult orElse(),
   }) {
     if (updateCurrentQuestion != null) {
-      return updateCurrentQuestion(updateIndexWith);
+      return updateCurrentQuestion(withAnimation, pageDirection, pageIndex);
     }
     return orElse();
   }
@@ -768,9 +823,13 @@ class _$UpdateCurrentQuestionEventImpl
 
 abstract class UpdateCurrentQuestionEvent implements QuizEvent {
   const factory UpdateCurrentQuestionEvent(
-      {required final int updateIndexWith}) = _$UpdateCurrentQuestionEventImpl;
+      {required final bool withAnimation,
+      required final ScrollDirection pageDirection,
+      final int? pageIndex}) = _$UpdateCurrentQuestionEventImpl;
 
-  int get updateIndexWith;
+  bool get withAnimation;
+  ScrollDirection get pageDirection;
+  int? get pageIndex;
   @JsonKey(ignore: true)
   _$$UpdateCurrentQuestionEventImplCopyWith<_$UpdateCurrentQuestionEventImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -828,7 +887,9 @@ class _$UpdateDurationEventImpl
     required TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)
         answerQuestion,
-    required TResult Function(int updateIndexWith) updateCurrentQuestion,
+    required TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)
+        updateCurrentQuestion,
     required TResult Function() updateDuration,
   }) {
     return updateDuration();
@@ -842,7 +903,9 @@ class _$UpdateDurationEventImpl
     TResult? Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult? Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult? Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult? Function()? updateDuration,
   }) {
     return updateDuration?.call();
@@ -856,7 +919,9 @@ class _$UpdateDurationEventImpl
     TResult Function(
             String selectedAnswer, QuizStateModel quizStateModel, int index)?
         answerQuestion,
-    TResult Function(int updateIndexWith)? updateCurrentQuestion,
+    TResult Function(
+            bool withAnimation, ScrollDirection pageDirection, int? pageIndex)?
+        updateCurrentQuestion,
     TResult Function()? updateDuration,
     required TResult orElse(),
   }) {
@@ -917,8 +982,11 @@ mixin _$QuizState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<QuizStateModel> questions,
-            int currentQuestion, bool userStartedQuiz)
+    required TResult Function(
+            List<QuizStateModel> questions,
+            int currentQuestionIndex,
+            bool userStartedQuiz,
+            bool withPageAnimation)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -926,8 +994,8 @@ mixin _$QuizState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult? Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult? Function(String message)? error,
   }) =>
@@ -935,8 +1003,8 @@ mixin _$QuizState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -1030,8 +1098,11 @@ class _$QuizLoadingStateImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<QuizStateModel> questions,
-            int currentQuestion, bool userStartedQuiz)
+    required TResult Function(
+            List<QuizStateModel> questions,
+            int currentQuestionIndex,
+            bool userStartedQuiz,
+            bool withPageAnimation)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -1042,8 +1113,8 @@ class _$QuizLoadingStateImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult? Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -1054,8 +1125,8 @@ class _$QuizLoadingStateImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -1113,8 +1184,9 @@ abstract class _$$QuizLoadedStateImplCopyWith<$Res> {
   @useResult
   $Res call(
       {List<QuizStateModel> questions,
-      int currentQuestion,
-      bool userStartedQuiz});
+      int currentQuestionIndex,
+      bool userStartedQuiz,
+      bool withPageAnimation});
 }
 
 /// @nodoc
@@ -1129,21 +1201,26 @@ class __$$QuizLoadedStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? questions = null,
-    Object? currentQuestion = null,
+    Object? currentQuestionIndex = null,
     Object? userStartedQuiz = null,
+    Object? withPageAnimation = null,
   }) {
     return _then(_$QuizLoadedStateImpl(
       null == questions
           ? _value._questions
           : questions // ignore: cast_nullable_to_non_nullable
               as List<QuizStateModel>,
-      currentQuestion: null == currentQuestion
-          ? _value.currentQuestion
-          : currentQuestion // ignore: cast_nullable_to_non_nullable
+      currentQuestionIndex: null == currentQuestionIndex
+          ? _value.currentQuestionIndex
+          : currentQuestionIndex // ignore: cast_nullable_to_non_nullable
               as int,
       userStartedQuiz: null == userStartedQuiz
           ? _value.userStartedQuiz
           : userStartedQuiz // ignore: cast_nullable_to_non_nullable
+              as bool,
+      withPageAnimation: null == withPageAnimation
+          ? _value.withPageAnimation
+          : withPageAnimation // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -1155,7 +1232,9 @@ class _$QuizLoadedStateImpl
     with DiagnosticableTreeMixin
     implements QuizLoadedState {
   const _$QuizLoadedStateImpl(final List<QuizStateModel> questions,
-      {this.currentQuestion = 0, this.userStartedQuiz = false})
+      {this.currentQuestionIndex = 0,
+      this.userStartedQuiz = false,
+      this.withPageAnimation = false})
       : _questions = questions;
 
   final List<QuizStateModel> _questions;
@@ -1168,14 +1247,17 @@ class _$QuizLoadedStateImpl
 
   @override
   @JsonKey()
-  final int currentQuestion;
+  final int currentQuestionIndex;
   @override
   @JsonKey()
   final bool userStartedQuiz;
+  @override
+  @JsonKey()
+  final bool withPageAnimation;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.loaded(questions: $questions, currentQuestion: $currentQuestion, userStartedQuiz: $userStartedQuiz)';
+    return 'QuizState.loaded(questions: $questions, currentQuestionIndex: $currentQuestionIndex, userStartedQuiz: $userStartedQuiz, withPageAnimation: $withPageAnimation)';
   }
 
   @override
@@ -1184,8 +1266,9 @@ class _$QuizLoadedStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'QuizState.loaded'))
       ..add(DiagnosticsProperty('questions', questions))
-      ..add(DiagnosticsProperty('currentQuestion', currentQuestion))
-      ..add(DiagnosticsProperty('userStartedQuiz', userStartedQuiz));
+      ..add(DiagnosticsProperty('currentQuestionIndex', currentQuestionIndex))
+      ..add(DiagnosticsProperty('userStartedQuiz', userStartedQuiz))
+      ..add(DiagnosticsProperty('withPageAnimation', withPageAnimation));
   }
 
   @override
@@ -1195,18 +1278,21 @@ class _$QuizLoadedStateImpl
             other is _$QuizLoadedStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._questions, _questions) &&
-            (identical(other.currentQuestion, currentQuestion) ||
-                other.currentQuestion == currentQuestion) &&
+            (identical(other.currentQuestionIndex, currentQuestionIndex) ||
+                other.currentQuestionIndex == currentQuestionIndex) &&
             (identical(other.userStartedQuiz, userStartedQuiz) ||
-                other.userStartedQuiz == userStartedQuiz));
+                other.userStartedQuiz == userStartedQuiz) &&
+            (identical(other.withPageAnimation, withPageAnimation) ||
+                other.withPageAnimation == withPageAnimation));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_questions),
-      currentQuestion,
-      userStartedQuiz);
+      currentQuestionIndex,
+      userStartedQuiz,
+      withPageAnimation);
 
   @JsonKey(ignore: true)
   @override
@@ -1219,38 +1305,44 @@ class _$QuizLoadedStateImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<QuizStateModel> questions,
-            int currentQuestion, bool userStartedQuiz)
+    required TResult Function(
+            List<QuizStateModel> questions,
+            int currentQuestionIndex,
+            bool userStartedQuiz,
+            bool withPageAnimation)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(questions, currentQuestion, userStartedQuiz);
+    return loaded(
+        questions, currentQuestionIndex, userStartedQuiz, withPageAnimation);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult? Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(questions, currentQuestion, userStartedQuiz);
+    return loaded?.call(
+        questions, currentQuestionIndex, userStartedQuiz, withPageAnimation);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(questions, currentQuestion, userStartedQuiz);
+      return loaded(
+          questions, currentQuestionIndex, userStartedQuiz, withPageAnimation);
     }
     return orElse();
   }
@@ -1292,12 +1384,14 @@ class _$QuizLoadedStateImpl
 
 abstract class QuizLoadedState implements QuizState {
   const factory QuizLoadedState(final List<QuizStateModel> questions,
-      {final int currentQuestion,
-      final bool userStartedQuiz}) = _$QuizLoadedStateImpl;
+      {final int currentQuestionIndex,
+      final bool userStartedQuiz,
+      final bool withPageAnimation}) = _$QuizLoadedStateImpl;
 
   List<QuizStateModel> get questions;
-  int get currentQuestion;
+  int get currentQuestionIndex;
   bool get userStartedQuiz;
+  bool get withPageAnimation;
   @JsonKey(ignore: true)
   _$$QuizLoadedStateImplCopyWith<_$QuizLoadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1379,8 +1473,11 @@ class _$QuizErrorStateImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<QuizStateModel> questions,
-            int currentQuestion, bool userStartedQuiz)
+    required TResult Function(
+            List<QuizStateModel> questions,
+            int currentQuestionIndex,
+            bool userStartedQuiz,
+            bool withPageAnimation)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -1391,8 +1488,8 @@ class _$QuizErrorStateImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult? Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult? Function(String message)? error,
   }) {
@@ -1403,8 +1500,8 @@ class _$QuizErrorStateImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<QuizStateModel> questions, int currentQuestion,
-            bool userStartedQuiz)?
+    TResult Function(List<QuizStateModel> questions, int currentQuestionIndex,
+            bool userStartedQuiz, bool withPageAnimation)?
         loaded,
     TResult Function(String message)? error,
     required TResult orElse(),

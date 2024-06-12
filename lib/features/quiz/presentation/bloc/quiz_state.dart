@@ -6,8 +6,9 @@ class QuizState with _$QuizState {
 
   const factory QuizState.loaded(
     List<QuizStateModel> questions, {
-    @Default(0) int currentQuestion,
+    @Default(0) int currentQuestionIndex,
     @Default(false) bool userStartedQuiz,
+    @Default(false) bool withPageAnimation,
   }) = QuizLoadedState;
 
   const factory QuizState.error({
@@ -18,14 +19,14 @@ class QuizState with _$QuizState {
 @immutable
 final class QuizStateModel extends Equatable {
   final QuestionModel questionModel;
-  final double remainingTime;
+  final Duration duration;
   final QuestionStatus status;
   final String? selectedAnswer;
   final List<String> answerList;
 
   const QuizStateModel({
     required this.questionModel,
-    this.remainingTime = 10,
+    this.duration = const Duration(seconds: 10),
     this.status = QuestionStatus.unanswered,
     this.selectedAnswer,
     required this.answerList,
@@ -33,14 +34,14 @@ final class QuizStateModel extends Equatable {
 
   QuizStateModel copyWith({
     QuestionModel? questionModel,
-    double? remainingTime,
+    Duration? duration,
     QuestionStatus? status,
     String? selectedAnswer,
     List<String>? answerList,
   }) =>
       QuizStateModel(
         questionModel: questionModel ?? this.questionModel,
-        remainingTime: remainingTime ?? this.remainingTime,
+        duration: duration ?? this.duration,
         status: status ?? this.status,
         selectedAnswer: selectedAnswer ?? this.selectedAnswer,
         answerList: answerList ?? this.answerList,
@@ -49,7 +50,7 @@ final class QuizStateModel extends Equatable {
   @override
   List<Object?> get props => [
         questionModel,
-        remainingTime,
+        duration,
         status,
         selectedAnswer,
         answerList,

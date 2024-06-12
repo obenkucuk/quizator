@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:quizator/services/log/my_logger.dart';
@@ -31,6 +33,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<UpdateCurrentQuestionEvent>(_updateCurrentQuestion);
     on<UpdateDurationEvent>(_updateDuration);
   }
+
+  Duration _displayedQuestionDuration = const Duration(seconds: 10);
+  int _currentQuestionIndex = 0;
 
   Future<void> _getSelectedQuiz(
     GetSelectedQuizEvent event,
@@ -75,6 +80,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     if (state is QuizLoadedState) {
       emit((state as QuizLoadedState).copyWith(userStartedQuiz: true));
     }
+
+    _startTimer();
   }
 
   void _answerQuestion(
@@ -83,25 +90,33 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   ) {
     print('ANSWER QUESTION EVENT: ${event.index}');
     if (state is QuizLoadedState) {
-      final answeredQuestionList = [...(state as QuizLoadedState).questions]..replaceRange(
+      final myState = state as QuizLoadedState;
+
+      final answeredQuestionList = [...myState.questions]..replaceRange(
           event.index,
           event.index + 1,
           [
             event.quizStateModel.copyWith(
               selectedAnswer: event.selectedAnswer,
               status: QuestionStatus.answered,
+              duration: _displayedQuestionDuration,
             )
           ],
         );
 
-      answeredQuestionList.forEach((e) {
-        print((e.selectedAnswer ?? '') + '---' + e.status.toString());
-      });
-
+      log('soru cevaplayınca patlıyor');
+      print('NEDEN ZAMAN SIFIRLANIYOR: ${myState.questions.elementAt(event.index).duration}');
       emit(
-        (state as QuizLoadedState).copyWith(
+        myState.copyWith(
           questions: answeredQuestionList,
-          // currentQuestion: event.index + 1,
+          withPageAnimation: true,
+        ),
+      );
+
+      add(
+        const UpdateCurrentQuestionEvent(
+          withAnimation: true,
+          pageDirection: ScrollDirection.idle,
         ),
       );
     }
@@ -111,21 +126,117 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     UpdateCurrentQuestionEvent event,
     Emitter<QuizState> emit,
   ) {
-    print('update qurrent question ${event.updateIndexWith}');
+    print('update qurrent question $_currentQuestionIndex');
     if (state is QuizLoadedState) {
+      final myState = state as QuizLoadedState;
+      int? nextQuestionIndex;
+
+      final allQuestions = myState.questions.map((e) => e).toList();
+
+      final previousQuestions = allQuestions.sublist(0, _currentQuestionIndex);
+      final nextQuestions = allQuestions.sublist(_currentQuestionIndex + 1);
+
+      final nextUnasweredQuestion =
+          nextQuestions.firstWhereOrNull((element) => element.status == QuestionStatus.unanswered);
+
+      final previousUnasweredQuestion = previousQuestions.reversed
+          .firstWhereOrNull((element) => element.status == QuestionStatus.unanswered);
+
+      final nextAsweredQuestion =
+          nextQuestions.firstWhereOrNull((element) => element.status == QuestionStatus.answered);
+
+      final previousAsweredQuestion = previousQuestions.reversed
+          .firstWhereOrNull((element) => element.status == QuestionStatus.answered);
+
+      final hasAnyNextUnasweredQuestion =
+          nextQuestions.any((element) => element.status == QuestionStatus.unanswered);
+
+      final hasAnyPreviousUnasweredQuestion =
+          previousQuestions.any((element) => element.status == QuestionStatus.unanswered);
+
+      final hasAnyNextAsweredQuestion = nextQuestions.any((element) =>
+          element.status == QuestionStatus.answered && element.duration > Duration.zero);
+
+      final hasAnyPreviousAsweredQuestion = previousQuestions.any((element) =>
+          element.status == QuestionStatus.answered && element.duration > Duration.zero);
+
+      log(event.pageDirection.name);
+
+      if (event.pageDirection == ScrollDirection.idle &&
+          hasAnyNextUnasweredQuestion &&
+          nextUnasweredQuestion != null) {
+        nextQuestionIndex = myState.questions.indexOf(nextUnasweredQuestion);
+
+        log('11111');
+      } else if (event.pageDirection == ScrollDirection.idle &&
+          hasAnyPreviousUnasweredQuestion &&
+          previousUnasweredQuestion != null) {
+        nextQuestionIndex = myState.questions.indexOf(previousUnasweredQuestion);
+        log('22222');
+      } else if (event.pageDirection == ScrollDirection.reverse &&
+          hasAnyNextUnasweredQuestion &&
+          nextUnasweredQuestion != null) {
+        log('3333333');
+
+        nextQuestionIndex = myState.questions.indexOf(nextUnasweredQuestion);
+      } else if (event.pageDirection == ScrollDirection.reverse &&
+          !hasAnyNextUnasweredQuestion &&
+          hasAnyPreviousUnasweredQuestion &&
+          previousUnasweredQuestion != null) {
+        log('44444');
+        nextQuestionIndex = myState.questions.indexOf(previousUnasweredQuestion);
+      } else if (event.pageDirection == ScrollDirection.forward &&
+          hasAnyPreviousUnasweredQuestion &&
+          previousUnasweredQuestion != null) {
+        log('555555');
+
+        nextQuestionIndex = myState.questions.indexOf(previousUnasweredQuestion);
+      } else if (event.pageDirection == ScrollDirection.forward &&
+          hasAnyPreviousAsweredQuestion &&
+          previousAsweredQuestion != null) {
+        nextQuestionIndex = myState.questions.indexOf(previousAsweredQuestion);
+      } else if (event.pageDirection == ScrollDirection.forward &&
+          !hasAnyPreviousUnasweredQuestion &&
+          hasAnyNextUnasweredQuestion &&
+          nextUnasweredQuestion != null) {
+        log('66666');
+        nextQuestionIndex = myState.questions.indexOf(nextUnasweredQuestion);
+      } else if (event.pageIndex != null) {
+        nextQuestionIndex = event.pageIndex;
+      } else {
+        log('88888');
+
+        final firstNext = nextQuestions.firstWhereOrNull((quizModel) {
+          return quizModel.duration > Duration.zero;
+        });
+
+        if (firstNext != null) {
+          nextQuestionIndex = allQuestions.indexOf(firstNext);
+        } else {
+          final firstPrevious = previousQuestions.reversed.firstWhereOrNull((quizModel) {
+            return quizModel.duration > Duration.zero;
+          });
+
+          if (firstPrevious != null) {
+            nextQuestionIndex = allQuestions.indexOf(firstPrevious);
+          }
+        }
+      }
+
+      log('next ques' + nextQuestionIndex.toString());
+
+      _currentQuestionIndex = nextQuestionIndex ?? (_currentQuestionIndex);
+
+      log('current question index: $_currentQuestionIndex');
+      _startTimer();
+
       emit(
-        (state as QuizLoadedState).copyWith(
-          currentQuestion: event.updateIndexWith,
+        myState.copyWith(
+          currentQuestionIndex: _currentQuestionIndex,
+          withPageAnimation: true,
         ),
       );
     }
-
-    try {
-      _timer?.cancel();
-    } catch (_) {}
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      add(const UpdateDurationEvent());
-    });
   }
 
   void _updateDuration(
@@ -133,30 +244,84 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     Emitter<QuizState> emit,
   ) {
     if (state is QuizLoadedState) {
-      final u = (state as QuizLoadedState)
-          .questions[(state as QuizLoadedState).currentQuestion]
-          .copyWith(
-              remainingTime: (state as QuizLoadedState)
-                      .questions[(state as QuizLoadedState).currentQuestion]
-                      .remainingTime -
-                  1);
+      final myState = state as QuizLoadedState;
 
-      final updatedDurationList = [...(state as QuizLoadedState).questions]..replaceRange(
-          (state as QuizLoadedState).currentQuestion,
-          (state as QuizLoadedState).currentQuestion + 1,
-          [u]);
+      final currentQuestion = myState.questions[myState.currentQuestionIndex];
 
-      emit((state as QuizLoadedState).copyWith(
-        questions: updatedDurationList,
-      ));
+      if (currentQuestion.duration <= Duration.zero) {
+        add(
+          const UpdateCurrentQuestionEvent(
+            withAnimation: true,
+            pageDirection: ScrollDirection.idle,
+          ),
+        );
+      }
+
+      log("update");
+      final updatedQuizStateModel = myState.questions[_currentQuestionIndex].copyWith(
+        duration: myState.questions[_currentQuestionIndex].duration - const Duration(seconds: 1),
+      );
+
+      log('current question index: $_currentQuestionIndex');
+      _displayedQuestionDuration =
+          myState.questions[_currentQuestionIndex].duration >= Duration.zero
+              ? myState.questions[_currentQuestionIndex].duration - const Duration(seconds: 1)
+              : Duration.zero;
+
+      // if (_displayedQuestionDuration <= const Duration(seconds: -1) &&
+      //     updatedQuizStateModel.status == QuestionStatus.answered) {
+      //   return;
+      // }
+
+      final updatedDurationList = [...myState.questions]..replaceRange(
+          _currentQuestionIndex,
+          _currentQuestionIndex + 1,
+          [updatedQuizStateModel],
+        );
+
+      log('DURATİON LİSTESİ YPDATE EDİLİYOR : duration: ${updatedQuizStateModel.duration}');
+      emit(myState.copyWith(questions: updatedDurationList));
+
+      log('Sonrası DURATİON LİSTESİ YPDATE EDİLİYOR : duration: ${updatedQuizStateModel.duration}');
+      if (updatedQuizStateModel.duration <= Duration.zero &&
+          updatedQuizStateModel.status != QuestionStatus.answered) {
+        final expiredQuestionList = [...updatedDurationList]..replaceRange(
+            _currentQuestionIndex,
+            _currentQuestionIndex + 1,
+            [
+              updatedQuizStateModel.copyWith(status: QuestionStatus.expired),
+            ],
+          );
+
+        emit(myState.copyWith(questions: expiredQuestionList));
+
+        add(
+          const UpdateCurrentQuestionEvent(
+            withAnimation: true,
+            pageDirection: ScrollDirection.idle,
+          ),
+        );
+
+        return;
+      }
     }
   }
 
-  late Timer? _timer;
+  Timer? _timer;
+
+  void _startTimer() {
+    if (_timer != null) _timer?.cancel();
+
+    log('timer içi süre: ${_displayedQuestionDuration.inSeconds}');
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      add(const UpdateDurationEvent());
+    });
+  }
 
   @override
   Future<void> close() {
-    _timer?.cancel();
+    if (_timer != null) _timer?.cancel();
 
     return super.close();
   }

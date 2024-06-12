@@ -29,17 +29,17 @@ void main() async {
     '\nApp Name: ${packageInfo.appName}\n, Version: ${packageInfo.version}\n, Bundle ID: ${packageInfo.packageName}\n',
   );
 
-  Bloc.observer = TalkerBlocObserver(
-    talker: getIt<Talker>(),
-    settings: const TalkerBlocLoggerSettings(
-      // printChanges: false,
-      printClosings: true,
-      printCreations: true,
-      // printEvents: true,
-      // printTransitions: true,
-      printStateFullData: false,
-    ),
-  );
+  // Bloc.observer = TalkerBlocObserver(
+  //   talker: getIt<Talker>(),
+  //   settings: const TalkerBlocLoggerSettings(
+  //     // printChanges: false,
+  //     printClosings: true,
+  //     printCreations: true,
+  //     // printEvents: true,
+  //     // printTransitions: true,
+  //     printStateFullData: false,
+  //   ),
+  // );
 
   const flavorModel = FlavorModel(
     flavor: Flavors.DEVELOPMENT,
