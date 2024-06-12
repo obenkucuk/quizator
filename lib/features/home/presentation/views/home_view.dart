@@ -4,8 +4,6 @@ import 'package:quizator/config/router/routes/main_shell.dart';
 import 'package:quizator/features/home/data/models/quiz_category.dart';
 import '../../../../components/my_scrollbar.dart';
 import '../../../../components/sliver_sized_box.dart';
-import '../../../../config/theme/my_colors.dart';
-import '../../../../config/theme/text_styles.dart';
 import '../widgets/category_list_item.dart';
 import '../widgets/home_view_title.dart';
 
@@ -35,49 +33,14 @@ class HomeView extends StatelessWidget {
                     )
                   : null,
             ),
-
             const SliverPadding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               sliver: SliverSizedBox(height: 40, child: CupertinoSearchTextField()),
             ),
-
-            const HomeViewTitle(title: 'Challanges'),
-
-            SliverSizedBox(
-              height: 80,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemBuilder: (context, index) {
-                  return FittedBox(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor: context.myColors.primaryColor.withOpacity(0.5),
-                        ),
-                        Text('data', style: s10W700(context)),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(width: 10),
-                itemCount: 200,
-              ),
-            ),
-
-            // const SliverFillViewport(
-            //   viewportFraction: 0.4,
-            //   padEnds: false,
-            //   delegate: SliverChildListDelegate.fixed([ExampleParallax()]),
-            // ),
-
             HomeViewTitle(
               title: 'Categories',
               onPressed: () => const QuizCategoriesRoute().go(context),
             ),
-
             SliverSizedBox(
               height: 400,
               child: ListView.separated(
@@ -97,7 +60,6 @@ class HomeView extends StatelessWidget {
                 itemCount: QuizCategory.values.length,
               ),
             ),
-
             const SliverSizedBox(height: kBottomNavigationBarHeight),
           ],
         ),

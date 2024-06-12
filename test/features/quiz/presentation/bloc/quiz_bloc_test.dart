@@ -162,7 +162,10 @@ void main() {
     },
     act: (bloc) => bloc.add(const FinishQuizEvent()),
     expect: () => const <QuizState>[
-      QuizState.finishQuiz(),
+      QuizState.finishQuiz(
+        correctQuestionCount: 0,
+        totalQuestionCount: 10,
+      ),
     ],
   );
 }

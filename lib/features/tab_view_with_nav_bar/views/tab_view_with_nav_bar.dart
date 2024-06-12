@@ -42,8 +42,8 @@ class TabViewWithNavBar extends StatelessWidget {
           items: NavigationRailItems.values.mapIndexed((index, tab) {
             return BottomNavigationBarItem(
               icon: navigationShell.currentIndex == index
-                  ? Icon(tab.selectedIcon)
-                  : Icon(tab.unselectedIcon),
+                  ? Icon(tab.selectedIcon, color: CupertinoColors.activeBlue)
+                  : Icon(tab.unselectedIcon, color: Colors.white),
               label: tab.label,
             );
           }).toList(),
