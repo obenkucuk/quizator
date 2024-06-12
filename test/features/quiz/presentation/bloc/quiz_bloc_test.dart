@@ -114,7 +114,10 @@ void main() {
   );
 
   blocTest<QuizBloc, QuizState>(
-    'emits [QuizState.loaded(testQuizStateModels), QuizState.loaded(testQuizStateModels, userStartedQuiz: true)] when QuizEvent.startQuiz() is added.',
+    '''emits [ QuizState.loaded(testQuizStateModelList),
+        QuizState.loaded(testQuizStateModelList, userStartedQuiz: true),
+        QuizState.loaded(answeredQuestionList, userStartedQuiz: true, currentQuestionIndex: 0),
+        QuizState.loaded(answeredQuestionList, userStartedQuiz: true, currentQuestionIndex: 1),] when QuizEvent.startQuiz() is added.''',
     build: () {
       provideDummy<Either<IFailure, QuizModel>>(Right(model));
       when(getSelectedQuiz(any)).thenAnswer((_) async => Right(model));
@@ -147,5 +150,19 @@ void main() {
         QuizState.loaded(answeredQuestionList, userStartedQuiz: true, currentQuestionIndex: 1),
       ];
     },
+  );
+
+  blocTest<QuizBloc, QuizState>(
+    'emits [QuizState.finishQuiz()] when FinishQuizEvent is added.',
+    build: () {
+      provideDummy<Either<IFailure, QuizModel>>(Right(model));
+      when(getSelectedQuiz(any)).thenAnswer((_) async => Right(model));
+
+      return bloc;
+    },
+    act: (bloc) => bloc.add(const FinishQuizEvent()),
+    expect: () => const <QuizState>[
+      QuizState.finishQuiz(),
+    ],
   );
 }
