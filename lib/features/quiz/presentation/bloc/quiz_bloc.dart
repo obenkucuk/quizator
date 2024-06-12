@@ -38,6 +38,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   Duration _displayedQuestionDuration = const Duration(seconds: 10);
   int _currentQuestionIndex = 0;
 
+  // This Event is for initializing the quiz.
   Future<void> _getSelectedQuiz(
     _GetSelectedQuizEvent event,
     Emitter<QuizState> emit,
@@ -90,6 +91,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     emit(QuizState.loaded(quizStateModels));
   }
 
+  // This event is for starting the quiz. It will be called when the user clicks the start button.
   void _startQuiz(
     StartQuizEvent event,
     Emitter<QuizState> emit,
@@ -101,6 +103,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     _startTimer();
   }
 
+  // User select an answer for the question.
   void _answerQuestion(
     AnswerQuestionEvent event,
     Emitter<QuizState> emit,
@@ -130,6 +133,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
   }
 
+  // This event is for updating the current question. It obey the rules of the quiz.
   void _updateCurrentQuestion(
     UpdateCurrentQuestionEvent event,
     Emitter<QuizState> emit,
@@ -229,6 +233,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
   }
 
+  // This event is for updating the duration of the current question. It will be called every second.
   void _updateDuration(
     _UpdateDurationEvent event,
     Emitter<QuizState> emit,
@@ -289,6 +294,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
   }
 
+  // This event is for finishing the quiz. If the user answered all questions, it will be called.
   void _finishQuiz(
     FinishQuizEvent event,
     Emitter<QuizState> emit,
@@ -312,7 +318,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   }
 
   Timer? _timer;
-
+  // This function is for starting the timer. It will be called when the user starts the quiz.
   void _startTimer() {
     if (_timer != null) _timer?.cancel();
 
@@ -324,7 +330,6 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   @override
   Future<void> close() {
     if (_timer != null) _timer?.cancel();
-
     return super.close();
   }
 }

@@ -9,6 +9,7 @@ class MyScrollbar extends StatelessWidget {
     this.padding,
     this.crossAxisMargin = 0,
     this.interactive = false,
+    this.mainAxisMargin = 0,
   });
 
   final Widget child;
@@ -16,6 +17,7 @@ class MyScrollbar extends StatelessWidget {
   final ScrollbarOrientation? scrollbarOrientation;
   final EdgeInsets? padding;
   final double crossAxisMargin;
+  final double mainAxisMargin;
   final bool interactive;
 
   @override
@@ -23,10 +25,7 @@ class MyScrollbar extends StatelessWidget {
     final top = kMinInteractiveDimensionCupertino + MediaQuery.paddingOf(context).top + 52;
     final bottom = MediaQuery.paddingOf(context).bottom;
 
-    final customPadding = EdgeInsets.only(
-      top: top,
-      bottom: bottom,
-    );
+    final customPadding = EdgeInsets.only(top: top, bottom: bottom);
 
     return RawScrollbar(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(500))),
@@ -37,6 +36,7 @@ class MyScrollbar extends StatelessWidget {
       controller: controller,
       scrollbarOrientation: scrollbarOrientation,
       crossAxisMargin: crossAxisMargin,
+      mainAxisMargin: mainAxisMargin,
       child: child,
     );
   }

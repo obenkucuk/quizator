@@ -208,6 +208,8 @@ class QuizLoadedView extends HookWidget {
                       )
                     ],
                   ),
+
+                  //* Transparent Container to prevent user interaction during page change animation
                   BlocBuilder<QuizBloc, QuizState>(
                     builder: (context, state) {
                       state as QuizLoadedState;

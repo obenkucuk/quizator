@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  // Banner for flavors.
   CustomPainter bannerPainter(FlavorModel flavorModel) => BannerPainter(
         message: flavorModel.flavor.bannerName,
         textDirection: TextDirection.ltr,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quizator/config/router/routes/main_shell.dart';
 import 'package:quizator/features/home/data/models/quiz_category.dart';
 import '../../../../components/my_scrollbar.dart';
@@ -14,6 +15,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       child: MyScrollbar(
+        padding: EdgeInsets.zero,
         child: CustomScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           slivers: [
@@ -26,9 +28,9 @@ class HomeView extends StatelessWidget {
               alwaysShowMiddle: false,
               largeTitle: const Text('Quizator'),
               middle: const Text('Quizator'),
-              leading: Navigator.canPop(context)
+              leading: GoRouter.of(context).canPop()
                   ? GestureDetector(
-                      onTap: () async => Navigator.maybePop(context),
+                      onTap: () async => GoRouter.of(context).pop(context),
                       child: const Icon(CupertinoIcons.back),
                     )
                   : null,
@@ -43,21 +45,27 @@ class HomeView extends StatelessWidget {
             ),
             SliverSizedBox(
               height: 400,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                cacheExtent: 1000,
-                itemBuilder: (context, index) {
-                  final category = QuizCategory.values[index];
+              child: MyScrollbar(
+                scrollbarOrientation: ScrollbarOrientation.bottom,
+                padding: EdgeInsets.zero,
+                crossAxisMargin: -10,
+                mainAxisMargin: 20,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  cacheExtent: 2000,
+                  itemBuilder: (context, index) {
+                    final category = QuizCategory.values[index];
 
-                  return CategoryListItem(
-                    imageUrl: category.imageUrl,
-                    name: category.name,
-                    category: category.number,
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(width: 10),
-                itemCount: QuizCategory.values.length,
+                    return CategoryListItem(
+                      imageUrl: category.imageUrl,
+                      name: category.name,
+                      category: category.number,
+                    );
+                  },
+                  separatorBuilder: (context, index) => const SizedBox(width: 10),
+                  itemCount: QuizCategory.values.length,
+                ),
               ),
             ),
             const SliverSizedBox(height: kBottomNavigationBarHeight),

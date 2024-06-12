@@ -14,6 +14,7 @@ import 'features/quiz/domain/repositories/i_quiz_repository.dart';
 final getIt = GetIt.I;
 
 void initContainer() {
+  // Logger setup
   getIt.registerLazySingleton(() => Talker(
         settings: TalkerSettings(
           enabled: true,
@@ -24,11 +25,13 @@ void initContainer() {
       ));
 
   getIt.registerFactory(() => TalkerRouteObserver(getIt<Talker>()));
-
   getIt.registerLazySingleton(() => MyTalkerLogger(
         talker: getIt<Talker>(),
       ));
 
+  getIt.registerFactory(() => NetworkInfo());
+
+  // Quiz feature setup
   getIt.registerFactory(() => QuizBloc(
         getSelectedQuiz: getIt(),
         myTalkerLogger: getIt(),
@@ -45,5 +48,4 @@ void initContainer() {
 
   getIt.registerFactory(() => QuizNetworkDataSource(quizService: getIt()));
   getIt.registerFactory(() => MyChopperService.instance.chopper.getService<QuizService>());
-  getIt.registerFactory(() => NetworkInfo());
 }
