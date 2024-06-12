@@ -29,6 +29,12 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   factory: $SingleQuizRouteExtension._fromState,
                 ),
                 GoRouteData.$route(
+                  path: 'quiz-score',
+                  name: 'Quiz Score',
+                  parentNavigatorKey: QuizScoreRoute.$parentNavigatorKey,
+                  factory: $QuizScoreRouteExtension._fromState,
+                ),
+                GoRouteData.$route(
                   path: 'categories',
                   name: 'Quiz Categories',
                   factory: $QuizCategoriesRouteExtension._fromState,
@@ -80,6 +86,32 @@ extension $SingleQuizRouteExtension on SingleQuizRoute {
         '/quiz/single-quiz',
         queryParams: {
           'category': category.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $QuizScoreRouteExtension on QuizScoreRoute {
+  static QuizScoreRoute _fromState(GoRouterState state) => QuizScoreRoute(
+        correctQuestionCount:
+            int.parse(state.uri.queryParameters['correct-question-count']!),
+        totalQuestionCount:
+            int.parse(state.uri.queryParameters['total-question-count']!),
+      );
+
+  String get location => GoRouteData.$location(
+        '/quiz/quiz-score',
+        queryParams: {
+          'correct-question-count': correctQuestionCount.toString(),
+          'total-question-count': totalQuestionCount.toString(),
         },
       );
 

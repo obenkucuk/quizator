@@ -14,11 +14,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Egzersizler');
-
-    // final top = kMinInteractiveDimensionCupertino + MediaQuery.paddingOf(context).top + 52;
-    // final bottom = MediaQuery.paddingOf(context).bottom +kBottomNavigationBarHeight;
-
     return CupertinoPageScaffold(
       child: MyScrollbar(
         child: CustomScrollView(

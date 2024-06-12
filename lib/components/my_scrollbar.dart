@@ -20,8 +20,6 @@ class MyScrollbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('MyScrollbar BUILT');
-
     final top = kMinInteractiveDimensionCupertino + MediaQuery.paddingOf(context).top + 52;
     final bottom = MediaQuery.paddingOf(context).bottom;
 

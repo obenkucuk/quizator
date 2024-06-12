@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quizator/config/router/routes/main_shell.dart';
 import 'package:quizator/config/theme/my_colors.dart';
 import 'package:quizator/features/quiz/presentation/bloc/quiz_bloc.dart';
 
@@ -16,15 +17,22 @@ final class QuizView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<QuizBloc>()..add(QuizEvent.getSelectedQuiz(category: category)),
-      child: BlocBuilder<QuizBloc, QuizState>(
+      child: BlocConsumer<QuizBloc, QuizState>(
+        listener: (context, state) {
+          if (state is QuizFinishState) {
+            const QuizScoreRoute(correctQuestionCount: 3, totalQuestionCount: 5).go(context);
+          }
+        },
+        listenWhen: (previous, current) => previous.runtimeType != current.runtimeType,
         buildWhen: (previous, current) => previous.runtimeType != current.runtimeType,
         builder: (context, state) {
           return CupertinoPageScaffold(
             child: state.when(
               loading: () =>
                   Center(child: CupertinoActivityIndicator(color: context.myColors.primaryColor)),
-              loaded: (_, __, ___, ____) => const QuizLoadedView(),
+              loaded: (_, __, ___) => const QuizLoadedView(),
               error: (message) => Center(child: Text(message)),
+              finishQuiz: () => const SizedBox(),
             ),
           );
         },

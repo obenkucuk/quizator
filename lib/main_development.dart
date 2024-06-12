@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -7,9 +6,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:quizator/injection_container.dart';
 import 'package:quizator/services/http_service/my_chopper_service.dart';
 import 'package:quizator/services/log/my_logger.dart';
-import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
-import 'package:talker_bloc_logger/talker_bloc_logger_settings.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 import 'app.dart';
 import 'config/flavor/flavor_model.dart';
 import 'config/flavor/flavors.dart';

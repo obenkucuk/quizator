@@ -19,8 +19,6 @@ class CategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('LocationListItem BUILT');
-
     return GestureDetector(
       onTap: () {
         SingleQuizRoute(category: category).go(context);

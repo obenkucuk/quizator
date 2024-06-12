@@ -103,8 +103,8 @@ final class QuestionItemWidget extends HookWidget {
                                       ? Colors.orange.withOpacity(0.5)
                                       : CupertinoColors.quaternarySystemFill,
                                   padding: EdgeInsets.zero,
-                                  onPressed: quizStateModel.status == QuestionStatus.expired ||
-                                          quizStateModel.duration <= Duration.zero
+                                  onPressed: (quizStateModel.status == QuestionStatus.expired ||
+                                          quizStateModel.duration <= Duration.zero)
                                       ? null
                                       : () {
                                           context.read<QuizBloc>().add(

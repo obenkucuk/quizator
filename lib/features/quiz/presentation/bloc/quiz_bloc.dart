@@ -32,6 +32,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     on<AnswerQuestionEvent>(_answerQuestion);
     on<UpdateCurrentQuestionEvent>(_updateCurrentQuestion);
     on<UpdateDurationEvent>(_updateDuration);
+    on<FinishQuizEvent>(_finishQuiz);
   }
 
   Duration _displayedQuestionDuration = const Duration(seconds: 10);
@@ -88,7 +89,6 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     AnswerQuestionEvent event,
     Emitter<QuizState> emit,
   ) {
-    print('ANSWER QUESTION EVENT: ${event.index}');
     if (state is QuizLoadedState) {
       final myState = state as QuizLoadedState;
 
@@ -104,19 +104,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           ],
         );
 
-      log('soru cevaplayınca patlıyor');
-      print('NEDEN ZAMAN SIFIRLANIYOR: ${myState.questions.elementAt(event.index).duration}');
-      emit(
-        myState.copyWith(
-          questions: answeredQuestionList,
-          withPageAnimation: true,
-        ),
-      );
+      emit(myState.copyWith(questions: answeredQuestionList));
 
       add(
         const UpdateCurrentQuestionEvent(
-          withAnimation: true,
-          pageDirection: ScrollDirection.idle,
+          pageDirection: ScrollDirection.reverse,
         ),
       );
     }
@@ -126,7 +118,6 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     UpdateCurrentQuestionEvent event,
     Emitter<QuizState> emit,
   ) {
-    print('update qurrent question $_currentQuestionIndex');
     if (state is QuizLoadedState) {
       final myState = state as QuizLoadedState;
       int? nextQuestionIndex;
@@ -142,98 +133,67 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final previousUnasweredQuestion = previousQuestions.reversed
           .firstWhereOrNull((element) => element.status == QuestionStatus.unanswered);
 
-      final nextAsweredQuestion =
-          nextQuestions.firstWhereOrNull((element) => element.status == QuestionStatus.answered);
-
-      final previousAsweredQuestion = previousQuestions.reversed
-          .firstWhereOrNull((element) => element.status == QuestionStatus.answered);
-
       final hasAnyNextUnasweredQuestion =
           nextQuestions.any((element) => element.status == QuestionStatus.unanswered);
 
       final hasAnyPreviousUnasweredQuestion =
           previousQuestions.any((element) => element.status == QuestionStatus.unanswered);
 
-      final hasAnyNextAsweredQuestion = nextQuestions.any((element) =>
+      final hasAnyNextAsweredAndUnexpiredQuestion = nextQuestions.any((element) =>
           element.status == QuestionStatus.answered && element.duration > Duration.zero);
 
-      final hasAnyPreviousAsweredQuestion = previousQuestions.any((element) =>
+      final hasAnyPreviousAsweredAndUnexpiredQuestion = previousQuestions.any((element) =>
           element.status == QuestionStatus.answered && element.duration > Duration.zero);
 
-      log(event.pageDirection.name);
+      final nextAsweredAndUnexpiredQuestion = nextQuestions.firstWhereOrNull((element) =>
+          element.status == QuestionStatus.answered && element.duration > Duration.zero);
 
-      if (event.pageDirection == ScrollDirection.idle &&
-          hasAnyNextUnasweredQuestion &&
-          nextUnasweredQuestion != null) {
-        nextQuestionIndex = myState.questions.indexOf(nextUnasweredQuestion);
+      final previousAsweredAndUnexpiredQuestion = previousQuestions.reversed.firstWhereOrNull(
+          (element) =>
+              element.status == QuestionStatus.answered && element.duration > Duration.zero);
 
-        log('11111');
-      } else if (event.pageDirection == ScrollDirection.idle &&
-          hasAnyPreviousUnasweredQuestion &&
-          previousUnasweredQuestion != null) {
-        nextQuestionIndex = myState.questions.indexOf(previousUnasweredQuestion);
-        log('22222');
-      } else if (event.pageDirection == ScrollDirection.reverse &&
-          hasAnyNextUnasweredQuestion &&
-          nextUnasweredQuestion != null) {
-        log('3333333');
+      final isEndOfQuiz = allQuestions.every((element) =>
+          (element.status == QuestionStatus.answered && element.duration <= Duration.zero) ||
+          element.status == QuestionStatus.expired);
 
-        nextQuestionIndex = myState.questions.indexOf(nextUnasweredQuestion);
-      } else if (event.pageDirection == ScrollDirection.reverse &&
-          !hasAnyNextUnasweredQuestion &&
-          hasAnyPreviousUnasweredQuestion &&
-          previousUnasweredQuestion != null) {
-        log('44444');
-        nextQuestionIndex = myState.questions.indexOf(previousUnasweredQuestion);
-      } else if (event.pageDirection == ScrollDirection.forward &&
-          hasAnyPreviousUnasweredQuestion &&
-          previousUnasweredQuestion != null) {
-        log('555555');
+      void handleQuestionAction(ScrollDirection direction) {
+        if (isEndOfQuiz) {
+          myTalkerLogger.log('Quiz bitti');
+          emit(const QuizFinishState());
 
-        nextQuestionIndex = myState.questions.indexOf(previousUnasweredQuestion);
-      } else if (event.pageDirection == ScrollDirection.forward &&
-          hasAnyPreviousAsweredQuestion &&
-          previousAsweredQuestion != null) {
-        nextQuestionIndex = myState.questions.indexOf(previousAsweredQuestion);
-      } else if (event.pageDirection == ScrollDirection.forward &&
-          !hasAnyPreviousUnasweredQuestion &&
-          hasAnyNextUnasweredQuestion &&
-          nextUnasweredQuestion != null) {
-        log('66666');
-        nextQuestionIndex = myState.questions.indexOf(nextUnasweredQuestion);
-      } else if (event.pageIndex != null) {
-        nextQuestionIndex = event.pageIndex;
-      } else {
-        log('88888');
+          return;
+        }
 
-        final firstNext = nextQuestions.firstWhereOrNull((quizModel) {
-          return quizModel.duration > Duration.zero;
-        });
-
-        if (firstNext != null) {
-          nextQuestionIndex = allQuestions.indexOf(firstNext);
-        } else {
-          final firstPrevious = previousQuestions.reversed.firstWhereOrNull((quizModel) {
-            return quizModel.duration > Duration.zero;
-          });
-
-          if (firstPrevious != null) {
-            nextQuestionIndex = allQuestions.indexOf(firstPrevious);
-          }
+        switch (direction) {
+          case ScrollDirection.reverse:
+            if (hasAnyNextUnasweredQuestion) {
+              nextQuestionIndex = allQuestions.indexOf(nextUnasweredQuestion!);
+            } else if (hasAnyNextAsweredAndUnexpiredQuestion) {
+              nextQuestionIndex = allQuestions.indexOf(nextAsweredAndUnexpiredQuestion!);
+            } else {
+              handleQuestionAction(ScrollDirection.forward);
+            }
+          case ScrollDirection.forward:
+            if (hasAnyPreviousUnasweredQuestion) {
+              nextQuestionIndex = allQuestions.indexOf(previousUnasweredQuestion!);
+            } else if (hasAnyPreviousAsweredAndUnexpiredQuestion) {
+              nextQuestionIndex = allQuestions.indexOf(previousAsweredAndUnexpiredQuestion!);
+            } else {
+              handleQuestionAction(ScrollDirection.reverse);
+            }
+          case ScrollDirection.idle:
         }
       }
 
-      log('next ques' + nextQuestionIndex.toString());
+      handleQuestionAction(event.pageDirection);
 
       _currentQuestionIndex = nextQuestionIndex ?? (_currentQuestionIndex);
 
-      log('current question index: $_currentQuestionIndex');
       _startTimer();
 
       emit(
         myState.copyWith(
           currentQuestionIndex: _currentQuestionIndex,
-          withPageAnimation: true,
         ),
       );
     }
@@ -251,8 +211,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       if (currentQuestion.duration <= Duration.zero) {
         add(
           const UpdateCurrentQuestionEvent(
-            withAnimation: true,
-            pageDirection: ScrollDirection.idle,
+            pageDirection: ScrollDirection.reverse,
           ),
         );
       }
@@ -296,15 +255,20 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         emit(myState.copyWith(questions: expiredQuestionList));
 
         add(
-          const UpdateCurrentQuestionEvent(
-            withAnimation: true,
-            pageDirection: ScrollDirection.idle,
-          ),
+          const UpdateCurrentQuestionEvent(pageDirection: ScrollDirection.reverse),
         );
 
         return;
       }
     }
+  }
+
+  void _finishQuiz(
+    FinishQuizEvent event,
+    Emitter<QuizState> emit,
+  ) {
+    emit(const QuizFinishState());
+    return;
   }
 
   Timer? _timer;

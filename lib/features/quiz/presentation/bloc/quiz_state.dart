@@ -8,12 +8,13 @@ class QuizState with _$QuizState {
     List<QuizStateModel> questions, {
     @Default(0) int currentQuestionIndex,
     @Default(false) bool userStartedQuiz,
-    @Default(false) bool withPageAnimation,
   }) = QuizLoadedState;
 
   const factory QuizState.error({
     required String message,
   }) = QuizErrorState;
+
+  const factory QuizState.finishQuiz() = QuizFinishState;
 }
 
 @immutable

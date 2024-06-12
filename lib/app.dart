@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('-----------${const String.fromEnvironment('FLUTTER_APP_FLAVOR')}');
+    // print('-----------${const String.fromEnvironment('FLUTTER_APP_FLAVOR')}');
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),

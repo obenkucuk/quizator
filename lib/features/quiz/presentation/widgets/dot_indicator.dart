@@ -24,7 +24,7 @@ class _DotIndicator extends StatelessWidget {
             cacheExtent: 100,
             separatorBuilder: (_, __) => const SizedBox(width: 8),
             itemBuilder: (_, int index) {
-              final state = quizStateModels.map((e) => e.status).toList();
+              final status = quizStateModels.map((e) => e.status).toList();
 
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: index == currentQuestion ? 0 : 2),
@@ -32,7 +32,7 @@ class _DotIndicator extends StatelessWidget {
                   width: index == currentQuestion ? 16 : 12,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color: state[index].color,
+                      color: status[index].color,
                       borderRadius: BorderRadius.circular(500),
                       border: index == currentQuestion
                           ? Border.all(

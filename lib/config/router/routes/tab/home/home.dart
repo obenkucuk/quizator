@@ -9,6 +9,11 @@ const _homeShellBranchData = TypedStatefulShellBranch<HomeShellBranchData>(
         TypedGoRoute<SingleQuizRoute>(
           path: 'single-quiz',
           name: 'Single Quiz',
+          routes: [],
+        ),
+        TypedGoRoute<QuizScoreRoute>(
+          path: 'quiz-score',
+          name: 'Quiz Score',
           // routes: const [],
         ),
         TypedGoRoute<QuizCategoriesRoute>(
@@ -53,5 +58,29 @@ class SingleQuizRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return QuizView(category: category);
+  }
+}
+
+class QuizScoreRoute extends GoRouteData {
+  const QuizScoreRoute({required this.correctQuestionCount, required this.totalQuestionCount});
+
+  final int correctQuestionCount;
+  final int totalQuestionCount;
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Correct: $correctQuestionCount'),
+            Text('Total: $totalQuestionCount'),
+          ],
+        ),
+      ),
+    );
   }
 }
