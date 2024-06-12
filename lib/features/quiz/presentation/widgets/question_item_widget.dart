@@ -52,14 +52,14 @@ final class QuestionItemWidget extends HookWidget {
                             RichText(
                               text: TextSpan(
                                 text: 'Difficulty',
-                                style: s16W700.copyWith(
+                                style: s16W700(context).copyWith(
                                   color: context.myColors.primaryColor,
                                 ),
                                 children: <TextSpan>[
-                                  TextSpan(text: ' : ', style: s16W700),
+                                  TextSpan(text: ' : ', style: s16W700(context)),
                                   TextSpan(
                                     text: difficulty.name.toTitleCase(),
-                                    style: s16W700.copyWith(color: difficulty.color),
+                                    style: s16W700(context).copyWith(color: difficulty.color),
                                   ),
                                 ],
                               ),
@@ -93,6 +93,7 @@ final class QuestionItemWidget extends HookWidget {
                               child: SizedBox(
                                 height: 36,
                                 child: CupertinoButton(
+                                  key: Key('quiz_answer_$index'),
                                   color: answer == quizStateModel.selectedAnswer
                                       ? Colors.orange
                                       : context.myColors.primaryColor,
@@ -115,8 +116,8 @@ final class QuestionItemWidget extends HookWidget {
                                         },
                                   child: Text(
                                     answer,
-                                    style: s14W400.copyWith(
-                                        color: context.myColors.scaffoldBackgroundColor),
+                                    style: s14W400(context)
+                                        .copyWith(color: context.myColors.scaffoldBackgroundColor),
                                   ),
                                 ),
                               ),

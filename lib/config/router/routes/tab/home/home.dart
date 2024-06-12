@@ -57,7 +57,7 @@ class SingleQuizRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return QuizView(category: category);
+    return QuizScreen(category: category);
   }
 }
 
@@ -71,16 +71,9 @@ class QuizScoreRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Correct: $correctQuestionCount'),
-            Text('Total: $totalQuestionCount'),
-          ],
-        ),
-      ),
+    return QuizScoreView(
+      correctQuestionCount: correctQuestionCount,
+      totalQuestionCount: totalQuestionCount,
     );
   }
 }

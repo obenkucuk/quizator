@@ -57,7 +57,7 @@ class HomeView extends StatelessWidget {
                           radius: 20,
                           backgroundColor: context.myColors.primaryColor.withOpacity(0.5),
                         ),
-                        Text('data', style: s10W700),
+                        Text('data', style: s10W700(context)),
                       ],
                     ),
                   );

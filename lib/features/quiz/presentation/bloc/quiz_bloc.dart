@@ -44,50 +44,50 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   ) async {
     // NOTE: Kullandığım API sınırlı olduğu için bu kısmı kullanamadım. Sizz denerken bu kısmı kullanıp deneyin.
 
-    final result = await getSelectedQuiz(SelectedQuizParams(category: event.category));
+    // final result = await getSelectedQuiz(SelectedQuizParams(category: event.category));
 
-    result.fold(
-      (failure) => emit(QuizErrorState(message: failure.message)),
-      (data) {
-        final quizStateModels = List.generate(data.results.length, (index) {
-          final questionModel = data.results[index];
+    // result.fold(
+    //   (failure) => emit(QuizErrorState(message: failure.message)),
+    //   (data) {
+    //     final quizStateModels = List.generate(data.results.length, (index) {
+    //       final questionModel = data.results[index];
 
-          final answerList = [
-            ...questionModel.incorrectAnswers.take(2),
-            questionModel.correctAnswer
-          ]..shuffle(Random(42));
+    //       final answerList = [
+    //         ...questionModel.incorrectAnswers.take(2),
+    //         questionModel.correctAnswer
+    //       ]..shuffle(Random(42));
 
-          return QuizStateModel(questionModel: data.results[index], answerList: answerList);
-        });
+    //       return QuizStateModel(questionModel: data.results[index], answerList: answerList);
+    //     });
 
-        if (data.results.isEmpty) {
-          emit(const QuizErrorState(message: 'No question found'));
-          return;
-        }
+    //     if (data.results.isEmpty) {
+    //       emit(const QuizErrorState(message: 'No question found'));
+    //       return;
+    //     }
 
-        emit(QuizState.loaded(quizStateModels));
-      },
-    );
+    //     emit(QuizState.loaded(quizStateModels));
+    //   },
+    // );
 
     // NOTE: Eğer api istek sınırına takılırsa burdan deneyeceğimiz dummy data
     // Eğer burayı kullanırsanız blocTest UseCase kullanılmadığından hata verecektir.
 
-    // final data = QuizModel.fromJson(
-    //     jsonDecode(await rootBundle.loadString('assets/dummy_data/quiz_model.json')));
+    final data = QuizModel.fromJson(
+        jsonDecode(await rootBundle.loadString('assets/dummy_data/quiz_model.json')));
 
-    // final quizStateModels = List.generate(data.results.length, (index) {
-    //   final questionModel = data.results[index];
+    final quizStateModels = List.generate(data.results.length, (index) {
+      final questionModel = data.results[index];
 
-    //   final answerList = [...questionModel.incorrectAnswers.take(2), questionModel.correctAnswer]
-    //     ..shuffle(Random(42));
+      final answerList = [...questionModel.incorrectAnswers.take(2), questionModel.correctAnswer]
+        ..shuffle(Random(42));
 
-    //   return QuizStateModel(
-    //     questionModel: data.results[index],
-    //     answerList: answerList,
-    //   );
-    // });
+      return QuizStateModel(
+        questionModel: data.results[index],
+        answerList: answerList,
+      );
+    });
 
-    // emit(QuizState.loaded(quizStateModels));
+    emit(QuizState.loaded(quizStateModels));
   }
 
   void _startQuiz(
@@ -174,8 +174,18 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
       void handleQuestionAction(ScrollDirection direction) {
         if (isEndOfQuiz) {
+          final correctQuestionCount = myState.questions
+              .where((element) => element.status == QuestionStatus.answered)
+              .where((element) => element.selectedAnswer == element.questionModel.correctAnswer)
+              .length;
+
+          final totalQuestionCount = myState.questions.length;
+
           myTalkerLogger.log('Quiz bitti');
-          emit(const QuizFinishState());
+          emit(QuizFinishState(
+            correctQuestionCount: correctQuestionCount,
+            totalQuestionCount: totalQuestionCount,
+          ));
 
           return;
         }
@@ -283,8 +293,22 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     FinishQuizEvent event,
     Emitter<QuizState> emit,
   ) {
-    emit(const QuizFinishState());
-    return;
+    if (state is QuizLoadedState) {
+      final myState = state as QuizLoadedState;
+
+      final correctQuestionCount = myState.questions
+          .where((element) => element.status == QuestionStatus.answered)
+          .where((element) => element.selectedAnswer == element.questionModel.correctAnswer)
+          .length;
+
+      final totalQuestionCount = myState.questions.length;
+
+      emit(QuizFinishState(
+        correctQuestionCount: correctQuestionCount,
+        totalQuestionCount: totalQuestionCount,
+      ));
+      return;
+    }
   }
 
   Timer? _timer;

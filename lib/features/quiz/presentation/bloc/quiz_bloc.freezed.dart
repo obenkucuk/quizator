@@ -1106,7 +1106,8 @@ mixin _$QuizState {
             int currentQuestionIndex, bool userStartedQuiz)
         loaded,
     required TResult Function(String message) error,
-    required TResult Function() finishQuiz,
+    required TResult Function(int correctQuestionCount, int totalQuestionCount)
+        finishQuiz,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1116,7 +1117,8 @@ mixin _$QuizState {
             bool userStartedQuiz)?
         loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? finishQuiz,
+    TResult? Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1126,7 +1128,8 @@ mixin _$QuizState {
             bool userStartedQuiz)?
         loaded,
     TResult Function(String message)? error,
-    TResult Function()? finishQuiz,
+    TResult Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1225,7 +1228,8 @@ class _$QuizLoadingStateImpl
             int currentQuestionIndex, bool userStartedQuiz)
         loaded,
     required TResult Function(String message) error,
-    required TResult Function() finishQuiz,
+    required TResult Function(int correctQuestionCount, int totalQuestionCount)
+        finishQuiz,
   }) {
     return loading();
   }
@@ -1238,7 +1242,8 @@ class _$QuizLoadingStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? finishQuiz,
+    TResult? Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
   }) {
     return loading?.call();
   }
@@ -1251,7 +1256,8 @@ class _$QuizLoadingStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult Function(String message)? error,
-    TResult Function()? finishQuiz,
+    TResult Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -1420,7 +1426,8 @@ class _$QuizLoadedStateImpl
             int currentQuestionIndex, bool userStartedQuiz)
         loaded,
     required TResult Function(String message) error,
-    required TResult Function() finishQuiz,
+    required TResult Function(int correctQuestionCount, int totalQuestionCount)
+        finishQuiz,
   }) {
     return loaded(questions, currentQuestionIndex, userStartedQuiz);
   }
@@ -1433,7 +1440,8 @@ class _$QuizLoadedStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? finishQuiz,
+    TResult? Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
   }) {
     return loaded?.call(questions, currentQuestionIndex, userStartedQuiz);
   }
@@ -1446,7 +1454,8 @@ class _$QuizLoadedStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult Function(String message)? error,
-    TResult Function()? finishQuiz,
+    TResult Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1586,7 +1595,8 @@ class _$QuizErrorStateImpl
             int currentQuestionIndex, bool userStartedQuiz)
         loaded,
     required TResult Function(String message) error,
-    required TResult Function() finishQuiz,
+    required TResult Function(int correctQuestionCount, int totalQuestionCount)
+        finishQuiz,
   }) {
     return error(message);
   }
@@ -1599,7 +1609,8 @@ class _$QuizErrorStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? finishQuiz,
+    TResult? Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
   }) {
     return error?.call(message);
   }
@@ -1612,7 +1623,8 @@ class _$QuizErrorStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult Function(String message)? error,
-    TResult Function()? finishQuiz,
+    TResult Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1674,6 +1686,8 @@ abstract class _$$QuizFinishStateImplCopyWith<$Res> {
   factory _$$QuizFinishStateImplCopyWith(_$QuizFinishStateImpl value,
           $Res Function(_$QuizFinishStateImpl) then) =
       __$$QuizFinishStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int correctQuestionCount, int totalQuestionCount});
 }
 
 /// @nodoc
@@ -1683,6 +1697,24 @@ class __$$QuizFinishStateImplCopyWithImpl<$Res>
   __$$QuizFinishStateImplCopyWithImpl(
       _$QuizFinishStateImpl _value, $Res Function(_$QuizFinishStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? correctQuestionCount = null,
+    Object? totalQuestionCount = null,
+  }) {
+    return _then(_$QuizFinishStateImpl(
+      correctQuestionCount: null == correctQuestionCount
+          ? _value.correctQuestionCount
+          : correctQuestionCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalQuestionCount: null == totalQuestionCount
+          ? _value.totalQuestionCount
+          : totalQuestionCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
@@ -1690,27 +1722,49 @@ class __$$QuizFinishStateImplCopyWithImpl<$Res>
 class _$QuizFinishStateImpl
     with DiagnosticableTreeMixin
     implements QuizFinishState {
-  const _$QuizFinishStateImpl();
+  const _$QuizFinishStateImpl(
+      {required this.correctQuestionCount, required this.totalQuestionCount});
+
+  @override
+  final int correctQuestionCount;
+  @override
+  final int totalQuestionCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.finishQuiz()';
+    return 'QuizState.finishQuiz(correctQuestionCount: $correctQuestionCount, totalQuestionCount: $totalQuestionCount)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'QuizState.finishQuiz'));
+    properties
+      ..add(DiagnosticsProperty('type', 'QuizState.finishQuiz'))
+      ..add(DiagnosticsProperty('correctQuestionCount', correctQuestionCount))
+      ..add(DiagnosticsProperty('totalQuestionCount', totalQuestionCount));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$QuizFinishStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$QuizFinishStateImpl &&
+            (identical(other.correctQuestionCount, correctQuestionCount) ||
+                other.correctQuestionCount == correctQuestionCount) &&
+            (identical(other.totalQuestionCount, totalQuestionCount) ||
+                other.totalQuestionCount == totalQuestionCount));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, correctQuestionCount, totalQuestionCount);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$QuizFinishStateImplCopyWith<_$QuizFinishStateImpl> get copyWith =>
+      __$$QuizFinishStateImplCopyWithImpl<_$QuizFinishStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1720,9 +1774,10 @@ class _$QuizFinishStateImpl
             int currentQuestionIndex, bool userStartedQuiz)
         loaded,
     required TResult Function(String message) error,
-    required TResult Function() finishQuiz,
+    required TResult Function(int correctQuestionCount, int totalQuestionCount)
+        finishQuiz,
   }) {
-    return finishQuiz();
+    return finishQuiz(correctQuestionCount, totalQuestionCount);
   }
 
   @override
@@ -1733,9 +1788,10 @@ class _$QuizFinishStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? finishQuiz,
+    TResult? Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
   }) {
-    return finishQuiz?.call();
+    return finishQuiz?.call(correctQuestionCount, totalQuestionCount);
   }
 
   @override
@@ -1746,11 +1802,12 @@ class _$QuizFinishStateImpl
             bool userStartedQuiz)?
         loaded,
     TResult Function(String message)? error,
-    TResult Function()? finishQuiz,
+    TResult Function(int correctQuestionCount, int totalQuestionCount)?
+        finishQuiz,
     required TResult orElse(),
   }) {
     if (finishQuiz != null) {
-      return finishQuiz();
+      return finishQuiz(correctQuestionCount, totalQuestionCount);
     }
     return orElse();
   }
@@ -1794,5 +1851,13 @@ class _$QuizFinishStateImpl
 }
 
 abstract class QuizFinishState implements QuizState {
-  const factory QuizFinishState() = _$QuizFinishStateImpl;
+  const factory QuizFinishState(
+      {required final int correctQuestionCount,
+      required final int totalQuestionCount}) = _$QuizFinishStateImpl;
+
+  int get correctQuestionCount;
+  int get totalQuestionCount;
+  @JsonKey(ignore: true)
+  _$$QuizFinishStateImplCopyWith<_$QuizFinishStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -84,7 +84,7 @@ class CategoryListItem extends StatelessWidget {
           alignment: Alignment.bottomLeft,
           child: Text(
             name,
-            style: s20W600.copyWith(color: context.myColors.scaffoldBackgroundColor),
+            style: s20W600(context).copyWith(color: context.myColors.scaffoldBackgroundColor),
           )),
     );
   }

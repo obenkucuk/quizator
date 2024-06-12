@@ -142,7 +142,7 @@ class QuizLoadedView extends HookWidget {
                                               padding: EdgeInsets.zero,
                                               child: Text(
                                                 'Start Quiz',
-                                                style: s14W600.copyWith(
+                                                style: s14W600(context).copyWith(
                                                   color: context.myColors.scaffoldBackgroundColor,
                                                 ),
                                               ),
@@ -187,8 +187,8 @@ class QuizLoadedView extends HookWidget {
                                 color: context.myColors.primaryColor,
                                 child: Text(
                                   'Submit',
-                                  style: s16W700.copyWith(
-                                      color: context.myColors.scaffoldBackgroundColor),
+                                  style: s16W700(context)
+                                      .copyWith(color: context.myColors.scaffoldBackgroundColor),
                                 ),
                                 onPressed: () {
                                   context.read<QuizBloc>().add(const FinishQuizEvent());

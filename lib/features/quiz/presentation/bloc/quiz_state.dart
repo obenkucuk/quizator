@@ -14,7 +14,10 @@ class QuizState with _$QuizState {
     required String message,
   }) = QuizErrorState;
 
-  const factory QuizState.finishQuiz() = QuizFinishState;
+  const factory QuizState.finishQuiz({
+    required int correctQuestionCount,
+    required int totalQuestionCount,
+  }) = QuizFinishState;
 }
 
 @immutable
