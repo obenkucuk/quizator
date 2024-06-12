@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
@@ -27,11 +27,11 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     required this.getSelectedQuiz,
     required this.myTalkerLogger,
   }) : super(const QuizLoadingState()) {
-    on<GetSelectedQuizEvent>(_getSelectedQuiz);
+    on<_GetSelectedQuizEvent>(_getSelectedQuiz);
     on<StartQuizEvent>(_startQuiz);
     on<AnswerQuestionEvent>(_answerQuestion);
     on<UpdateCurrentQuestionEvent>(_updateCurrentQuestion);
-    on<UpdateDurationEvent>(_updateDuration);
+    on<_UpdateDurationEvent>(_updateDuration);
     on<FinishQuizEvent>(_finishQuiz);
   }
 
@@ -39,39 +39,55 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   int _currentQuestionIndex = 0;
 
   Future<void> _getSelectedQuiz(
-    GetSelectedQuizEvent event,
+    _GetSelectedQuizEvent event,
     Emitter<QuizState> emit,
   ) async {
-    /// TODO: api haline çevir geriye
-    // final result = await getSelectedQuiz(SelectedQuizParams(category: event.category));
+    // NOTE: Kullandığım API sınırlı olduğu için bu kısmı kullanamadım. Sizz denerken bu kısmı kullanıp deneyin.
 
-    // result.fold(
-    //   (failure) => emit(QuizErrorState(message: failure.message)),
-    //   (data) {
-    //     final quizStateModels = List.generate(data.results.length, (index) {
-    //       return QuizStateModel(questionModel: data.results[index]);
-    //     });
+    final result = await getSelectedQuiz(SelectedQuizParams(category: event.category));
 
-    //     emit(QuizState.loaded(quizStateModels));
-    //   },
-    // );
+    result.fold(
+      (failure) => emit(QuizErrorState(message: failure.message)),
+      (data) {
+        final quizStateModels = List.generate(data.results.length, (index) {
+          final questionModel = data.results[index];
 
-    final data = QuizModel.fromJson(
-        jsonDecode(await rootBundle.loadString('assets/dummy_data/quiz_model.json')));
+          final answerList = [
+            ...questionModel.incorrectAnswers.take(2),
+            questionModel.correctAnswer
+          ]..shuffle(Random(42));
 
-    final quizStateModels = List.generate(data.results.length, (index) {
-      final questionModel = data.results[index];
+          return QuizStateModel(questionModel: data.results[index], answerList: answerList);
+        });
 
-      final answerList = [...questionModel.incorrectAnswers.take(2), questionModel.correctAnswer]
-        ..shuffle();
+        if (data.results.isEmpty) {
+          emit(const QuizErrorState(message: 'No question found'));
+          return;
+        }
 
-      return QuizStateModel(
-        questionModel: data.results[index],
-        answerList: answerList,
-      );
-    });
+        emit(QuizState.loaded(quizStateModels));
+      },
+    );
 
-    emit(QuizState.loaded(quizStateModels));
+    // NOTE: Eğer api istek sınırına takılırsa burdan deneyeceğimiz dummy data
+    // Eğer burayı kullanırsanız blocTest UseCase kullanılmadığından hata verecektir.
+
+    // final data = QuizModel.fromJson(
+    //     jsonDecode(await rootBundle.loadString('assets/dummy_data/quiz_model.json')));
+
+    // final quizStateModels = List.generate(data.results.length, (index) {
+    //   final questionModel = data.results[index];
+
+    //   final answerList = [...questionModel.incorrectAnswers.take(2), questionModel.correctAnswer]
+    //     ..shuffle(Random(42));
+
+    //   return QuizStateModel(
+    //     questionModel: data.results[index],
+    //     answerList: answerList,
+    //   );
+    // });
+
+    // emit(QuizState.loaded(quizStateModels));
   }
 
   void _startQuiz(
@@ -168,6 +184,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           case ScrollDirection.reverse:
             if (hasAnyNextUnasweredQuestion) {
               nextQuestionIndex = allQuestions.indexOf(nextUnasweredQuestion!);
+            } else if (hasAnyPreviousUnasweredQuestion) {
+              nextQuestionIndex = allQuestions.indexOf(previousUnasweredQuestion!);
             } else if (hasAnyNextAsweredAndUnexpiredQuestion) {
               nextQuestionIndex = allQuestions.indexOf(nextAsweredAndUnexpiredQuestion!);
             } else {
@@ -176,6 +194,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           case ScrollDirection.forward:
             if (hasAnyPreviousUnasweredQuestion) {
               nextQuestionIndex = allQuestions.indexOf(previousUnasweredQuestion!);
+            } else if (hasAnyNextUnasweredQuestion) {
+              nextQuestionIndex = allQuestions.indexOf(nextUnasweredQuestion!);
             } else if (hasAnyPreviousAsweredAndUnexpiredQuestion) {
               nextQuestionIndex = allQuestions.indexOf(previousAsweredAndUnexpiredQuestion!);
             } else {
@@ -200,7 +220,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   }
 
   void _updateDuration(
-    UpdateDurationEvent event,
+    _UpdateDurationEvent event,
     Emitter<QuizState> emit,
   ) {
     if (state is QuizLoadedState) {
@@ -216,12 +236,10 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         );
       }
 
-      log("update");
       final updatedQuizStateModel = myState.questions[_currentQuestionIndex].copyWith(
         duration: myState.questions[_currentQuestionIndex].duration - const Duration(seconds: 1),
       );
 
-      log('current question index: $_currentQuestionIndex');
       _displayedQuestionDuration =
           myState.questions[_currentQuestionIndex].duration >= Duration.zero
               ? myState.questions[_currentQuestionIndex].duration - const Duration(seconds: 1)
@@ -238,10 +256,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           [updatedQuizStateModel],
         );
 
-      log('DURATİON LİSTESİ YPDATE EDİLİYOR : duration: ${updatedQuizStateModel.duration}');
       emit(myState.copyWith(questions: updatedDurationList));
 
-      log('Sonrası DURATİON LİSTESİ YPDATE EDİLİYOR : duration: ${updatedQuizStateModel.duration}');
       if (updatedQuizStateModel.duration <= Duration.zero &&
           updatedQuizStateModel.status != QuestionStatus.answered) {
         final expiredQuestionList = [...updatedDurationList]..replaceRange(
@@ -276,10 +292,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   void _startTimer() {
     if (_timer != null) _timer?.cancel();
 
-    log('timer içi süre: ${_displayedQuestionDuration.inSeconds}');
-
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      add(const UpdateDurationEvent());
+      add(const _UpdateDurationEvent());
     });
   }
 

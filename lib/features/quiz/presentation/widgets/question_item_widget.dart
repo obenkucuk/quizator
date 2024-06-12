@@ -14,14 +14,12 @@ import '../../data/models/quiz_model.dart';
 final class QuestionItemWidget extends HookWidget {
   const QuestionItemWidget({
     super.key,
-    required this.pageController,
     required this.quizStateModel,
-    required this.currentQuestion,
+    required this.currentQuestionIndex,
   });
 
-  final PageController pageController;
   final QuizStateModel quizStateModel;
-  final int currentQuestion;
+  final int currentQuestionIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +109,7 @@ final class QuestionItemWidget extends HookWidget {
                                                 AnswerQuestionEvent(
                                                   selectedAnswer: answer,
                                                   quizStateModel: quizStateModel,
-                                                  index: pageController.page?.round() ?? 0,
+                                                  index: currentQuestionIndex,
                                                 ),
                                               );
                                         },

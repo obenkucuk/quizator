@@ -56,32 +56,32 @@ mixin _$QuizEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) =>
@@ -140,7 +140,7 @@ class __$$GetSelectedQuizEventImplCopyWithImpl<$Res>
 
 class _$GetSelectedQuizEventImpl
     with DiagnosticableTreeMixin
-    implements GetSelectedQuizEvent {
+    implements _GetSelectedQuizEvent {
   const _$GetSelectedQuizEventImpl({required this.category});
 
   @override
@@ -232,12 +232,12 @@ class _$GetSelectedQuizEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) {
     return getSelectedQuiz(this);
@@ -246,11 +246,11 @@ class _$GetSelectedQuizEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) {
     return getSelectedQuiz?.call(this);
@@ -259,11 +259,11 @@ class _$GetSelectedQuizEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) {
@@ -274,8 +274,8 @@ class _$GetSelectedQuizEventImpl
   }
 }
 
-abstract class GetSelectedQuizEvent implements QuizEvent {
-  const factory GetSelectedQuizEvent({required final int category}) =
+abstract class _GetSelectedQuizEvent implements QuizEvent {
+  const factory _GetSelectedQuizEvent({required final int category}) =
       _$GetSelectedQuizEventImpl;
 
   int get category;
@@ -380,12 +380,12 @@ class _$StartQuizEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) {
     return startQuiz(this);
@@ -394,11 +394,11 @@ class _$StartQuizEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) {
     return startQuiz?.call(this);
@@ -407,11 +407,11 @@ class _$StartQuizEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) {
@@ -575,12 +575,12 @@ class _$AnswerQuestionEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) {
     return answerQuestion(this);
@@ -589,11 +589,11 @@ class _$AnswerQuestionEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) {
     return answerQuestion?.call(this);
@@ -602,11 +602,11 @@ class _$AnswerQuestionEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) {
@@ -759,12 +759,12 @@ class _$UpdateCurrentQuestionEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) {
     return updateCurrentQuestion(this);
@@ -773,11 +773,11 @@ class _$UpdateCurrentQuestionEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) {
     return updateCurrentQuestion?.call(this);
@@ -786,11 +786,11 @@ class _$UpdateCurrentQuestionEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) {
@@ -832,7 +832,7 @@ class __$$UpdateDurationEventImplCopyWithImpl<$Res>
 
 class _$UpdateDurationEventImpl
     with DiagnosticableTreeMixin
-    implements UpdateDurationEvent {
+    implements _UpdateDurationEvent {
   const _$UpdateDurationEventImpl();
 
   @override
@@ -909,12 +909,12 @@ class _$UpdateDurationEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) {
     return updateDuration(this);
@@ -923,11 +923,11 @@ class _$UpdateDurationEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) {
     return updateDuration?.call(this);
@@ -936,11 +936,11 @@ class _$UpdateDurationEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) {
@@ -951,8 +951,8 @@ class _$UpdateDurationEventImpl
   }
 }
 
-abstract class UpdateDurationEvent implements QuizEvent {
-  const factory UpdateDurationEvent() = _$UpdateDurationEventImpl;
+abstract class _UpdateDurationEvent implements QuizEvent {
+  const factory _UpdateDurationEvent() = _$UpdateDurationEventImpl;
 }
 
 /// @nodoc
@@ -1051,12 +1051,12 @@ class _$FinishQuizEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetSelectedQuizEvent value) getSelectedQuiz,
+    required TResult Function(_GetSelectedQuizEvent value) getSelectedQuiz,
     required TResult Function(StartQuizEvent value) startQuiz,
     required TResult Function(AnswerQuestionEvent value) answerQuestion,
     required TResult Function(UpdateCurrentQuestionEvent value)
         updateCurrentQuestion,
-    required TResult Function(UpdateDurationEvent value) updateDuration,
+    required TResult Function(_UpdateDurationEvent value) updateDuration,
     required TResult Function(FinishQuizEvent value) finishQuiz,
   }) {
     return finishQuiz(this);
@@ -1065,11 +1065,11 @@ class _$FinishQuizEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult? Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult? Function(StartQuizEvent value)? startQuiz,
     TResult? Function(AnswerQuestionEvent value)? answerQuestion,
     TResult? Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult? Function(UpdateDurationEvent value)? updateDuration,
+    TResult? Function(_UpdateDurationEvent value)? updateDuration,
     TResult? Function(FinishQuizEvent value)? finishQuiz,
   }) {
     return finishQuiz?.call(this);
@@ -1078,11 +1078,11 @@ class _$FinishQuizEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetSelectedQuizEvent value)? getSelectedQuiz,
+    TResult Function(_GetSelectedQuizEvent value)? getSelectedQuiz,
     TResult Function(StartQuizEvent value)? startQuiz,
     TResult Function(AnswerQuestionEvent value)? answerQuestion,
     TResult Function(UpdateCurrentQuestionEvent value)? updateCurrentQuestion,
-    TResult Function(UpdateDurationEvent value)? updateDuration,
+    TResult Function(_UpdateDurationEvent value)? updateDuration,
     TResult Function(FinishQuizEvent value)? finishQuiz,
     required TResult orElse(),
   }) {

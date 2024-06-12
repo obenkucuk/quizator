@@ -57,11 +57,7 @@ class QuizLoadedView extends HookWidget {
       },
       builder: (context, state) {
         return state.maybeWhen(
-          loaded: (
-            quizStateModels,
-            currentQuestionIndex,
-            userStartedQuiz,
-          ) {
+          loaded: (quizStateModels, currentQuestionIndex, userStartedQuiz) {
             return BlocListener<QuizBloc, QuizState>(
               listener: (context, state) {
                 if (state is QuizLoadedState) {
@@ -126,9 +122,8 @@ class QuizLoadedView extends HookWidget {
                                       //* Question
                                       QuestionItemWidget(
                                         // currentQuestion: previousPage.value,
-                                        currentQuestion: currentQuestionIndex,
+                                        currentQuestionIndex: index,
                                         quizStateModel: quizStateModel,
-                                        pageController: pageController,
                                       )
                                           .animate(
                                             target:
@@ -144,18 +139,19 @@ class QuizLoadedView extends HookWidget {
                                             height: 36,
                                             width: MediaQuery.sizeOf(context).width * 0.5,
                                             child: CupertinoButton.filled(
-                                                padding: EdgeInsets.zero,
-                                                child: Text(
-                                                  'Start Quiz',
-                                                  style: s14W600.copyWith(
-                                                    color: context.myColors.scaffoldBackgroundColor,
-                                                  ),
+                                              padding: EdgeInsets.zero,
+                                              child: Text(
+                                                'Start Quiz',
+                                                style: s14W600.copyWith(
+                                                  color: context.myColors.scaffoldBackgroundColor,
                                                 ),
-                                                onPressed: () {
-                                                  context
-                                                      .read<QuizBloc>()
-                                                      .add(const StartQuizEvent());
-                                                }),
+                                              ),
+                                              onPressed: () {
+                                                context
+                                                    .read<QuizBloc>()
+                                                    .add(const StartQuizEvent());
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),

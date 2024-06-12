@@ -4,7 +4,7 @@ part of 'quiz_bloc.dart';
 class QuizEvent with _$QuizEvent {
   const factory QuizEvent.getSelectedQuiz({
     required int category,
-  }) = GetSelectedQuizEvent;
+  }) = _GetSelectedQuizEvent;
 
   const factory QuizEvent.startQuiz() = StartQuizEvent;
 
@@ -18,7 +18,7 @@ class QuizEvent with _$QuizEvent {
     required ScrollDirection pageDirection,
   }) = UpdateCurrentQuestionEvent;
 
-  const factory QuizEvent.updateDuration() = UpdateDurationEvent;
+  const factory QuizEvent.updateDuration() = _UpdateDurationEvent;
 
   const factory QuizEvent.finishQuiz() = FinishQuizEvent;
 }
